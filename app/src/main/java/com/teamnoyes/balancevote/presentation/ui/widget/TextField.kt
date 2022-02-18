@@ -6,11 +6,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterStart
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.input.TextFieldValue
@@ -52,7 +56,7 @@ fun BVInput(
         }
         if (enableButton) {
             Spacer(modifier = Modifier.width(16.dp))
-            BVButton { onSendButtonClick(textState.text) }
+            BVButton(textState.text.isEmpty()) { onSendButtonClick(textState.text) }
         }
     }
 }
@@ -100,30 +104,21 @@ fun BVTextField(
 }
 
 @Composable
-fun BVButton(onClick: () -> Unit) {
-    Button(
-        onClick = { onClick() }, modifier = Modifier
+fun BVButton(isTextEmpty: Boolean, onClick: () -> Unit) {
+    IconButton(
+        onClick = { onClick() },
+        modifier = Modifier
+            .shadow(elevation = 4.dp, shape = RoundedCornerShape(8.dp))
             .height(64.dp)
             .width(64.dp)
-    ) {}
+            .background(color = Color.Magenta, shape = RoundedCornerShape(8.dp)),
+        enabled = !isTextEmpty
+    ) { Icon(Icons.Filled.Send, contentDescription = "Send Button") }
 }
 
 @Preview
 @Composable
 fun PreviewTextFieldWithButton() {
-    BalanceVoteTheme {
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colors.background
-        ) {
-            BVInput(true, {})
-        }
-    }
-}
-
-@Preview
-@Composable
-fun PreviewTextFieldWithButtonEmptyInput() {
     BalanceVoteTheme {
         Surface(
             modifier = Modifier.fillMaxWidth(),
