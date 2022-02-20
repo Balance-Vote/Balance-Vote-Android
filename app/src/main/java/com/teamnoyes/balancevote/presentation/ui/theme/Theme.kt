@@ -1,4 +1,4 @@
-package com.teamnoyes.balancevote.ui.theme
+package com.teamnoyes.balancevote.presentation.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

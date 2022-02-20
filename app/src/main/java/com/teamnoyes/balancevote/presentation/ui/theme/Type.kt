@@ -1,4 +1,4 @@
-package com.teamnoyes.balancevote.ui.theme
+package com.teamnoyes.balancevote.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
