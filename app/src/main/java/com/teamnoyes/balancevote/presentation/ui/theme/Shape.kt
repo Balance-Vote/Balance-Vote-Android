@@ -1,4 +1,4 @@
-package com.teamnoyes.balancevote.ui.theme
+package com.teamnoyes.balancevote.presentation.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
