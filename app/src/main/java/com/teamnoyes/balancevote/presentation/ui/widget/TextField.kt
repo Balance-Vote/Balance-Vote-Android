@@ -1,22 +1,20 @@
 package com.teamnoyes.balancevote.presentation.ui.widget
 
-import android.text.Layout
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterStart
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -31,16 +29,13 @@ import com.teamnoyes.balancevote.ui.theme.BalanceVoteTheme
  * TextFieldValue를 remember로 가지고 있어 버튼 클릭시 전송할 수 있도록 함
  *
  * @param enableButton 버튼 표시 유무
- * @param textFieldValue 입력 문자열 값
- * @param onTextChanged 입력 문자열 변경시 동작
+ * @param onSendButtonClick 전송 버튼 클릭시 동작
  */
 @Composable
 fun BVInput(
     enableButton: Boolean,
-    onSendButtonClick: (String) -> Unit,
-    height: Dp = 64.dp
+    onSendButtonClick: (String) -> Unit
 ) {
-//    전송시 textState.text
     var textState by remember { mutableStateOf(TextFieldValue()) }
     Row(
         modifier = Modifier
@@ -86,7 +81,11 @@ fun BVTextField(
                     .wrapContentHeight()
                     .fillMaxWidth()
                     .align(CenterStart)
-                    .padding(16.dp)
+                    .padding(16.dp),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Send
+                )
             )
             if (textFieldValue.text.isEmpty()) {
                 Text(
