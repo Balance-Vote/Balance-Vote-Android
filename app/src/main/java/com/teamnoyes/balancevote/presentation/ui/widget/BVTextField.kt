@@ -77,14 +77,15 @@ fun BVInput(
         Spacer(modifier = Modifier.height(4.dp))
         Row() {
             Spacer(modifier = Modifier.width(16.dp))
-            Text(text = "문자열 리소스로 출력 예정")
+            BVAlertText(isTextEmpty = textState.text.isEmpty())
         }
     }
 }
 
 @Composable
-fun BVAlertText() {
-
+fun BVAlertText(isTextEmpty: Boolean) {
+    val alertString = if (isTextEmpty) "빈 문자열 경고 - 문자열 리소스" else " "
+    Text(text = alertString, color = Color.Red)
 }
 
 @Composable
@@ -121,6 +122,7 @@ fun BVTextField(
                     imeAction = ImeAction.Send
                 ),
                 keyboardActions = KeyboardActions(
+//                    빈 글자일때는 막아야 함
                     onSend = { onSendButtonClick(textFieldValue) }
                 )
             )
