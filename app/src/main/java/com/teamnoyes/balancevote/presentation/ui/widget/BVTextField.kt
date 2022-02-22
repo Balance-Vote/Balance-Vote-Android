@@ -21,15 +21,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.teamnoyes.balancevote.ui.theme.BalanceVoteTheme
 
 /**
- * 버튼은 오른쪽 정렬, 남는 공간을 TextField로 채운다.
- * 버튼이 한 계층 위에 있어 먼저 공간을 결정해야 함
- * 버튼은 정사각형이어야 함
+ * 버튼은 오른쪽 정렬, 남는 공간을 TextField로 채움
  * TextFieldValue를 remember로 가지고 있어 버튼 클릭시 전송할 수 있도록 함
+ * 문자열이 비어있는 경우 전송 버튼이 비활성화 되고, 경고 메시지가 하단에 보여짐
  *
  * @param enableButton 버튼 표시 유무
  * @param onSendButtonClick 전송 버튼 클릭시 동작
@@ -95,7 +93,6 @@ fun BVTextField(
     onSendButtonClick: (TextFieldValue) -> Unit,
     focus: FocusRequester
 ) {
-//    text 저장 위치를 어디에?
     Box(
         modifier = Modifier
             .height(64.dp)
@@ -122,8 +119,11 @@ fun BVTextField(
                     imeAction = ImeAction.Send
                 ),
                 keyboardActions = KeyboardActions(
-//                    빈 글자일때는 막아야 함
-                    onSend = { onSendButtonClick(textFieldValue) }
+                    onSend = {
+                        if (textFieldValue.text.isNotEmpty()) {
+                            onSendButtonClick(textFieldValue)
+                        }
+                    }
                 )
             )
             if (textFieldValue.text.isEmpty()) {
