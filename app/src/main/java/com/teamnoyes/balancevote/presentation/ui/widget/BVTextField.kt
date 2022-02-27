@@ -22,7 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.teamnoyes.balancevote.ui.theme.BalanceVoteTheme
+import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
 
 /**
  * 버튼은 오른쪽 정렬, 남는 공간을 TextField로 채움

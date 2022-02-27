@@ -1,4 +1,4 @@
-package com.teamnoyes.balancevote.presentation.widget
+package com.teamnoyes.balancevote.presentation.ui.widget
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
