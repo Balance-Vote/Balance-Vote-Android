@@ -3,6 +3,7 @@ package com.teamnoyes.balancevote.presentation.ui.widget
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -43,7 +44,7 @@ fun BVTextButton(
         color = if (isSelected) {
             when (role) {
                 BVTextButtonRole.NORMAL -> {
-                    Color.White
+                    MaterialTheme.colors.background
                 }
                 BVTextButtonRole.RED -> {
                     RedChoice
@@ -53,23 +54,22 @@ fun BVTextButton(
                 }
             }
         } else {
-            Color.White
+            MaterialTheme.colors.background
         },
         modifier = modifier
             .fillMaxWidth()
-            .height(height = height)
-            .padding(8.dp),
+            .height(height = height),
         elevation = elevation,
     ) {
         Row(
             horizontalArrangement = horizontalAlignment,
             verticalAlignment = verticalAlign,
             modifier = Modifier.clickable(onClick = onClick)
-                .padding(8.dp, 8.dp)
         ) {
             Text(
                 text = text,
                 fontSize = fontSize,
+                color = MaterialTheme.colors.onSurface
 //                modifier = modifier.padding(8.dp, 0.dp)
             )
         }
