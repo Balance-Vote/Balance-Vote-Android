@@ -69,8 +69,8 @@ fun BVTextButton(
             Text(
                 text = text,
                 fontSize = fontSize,
-                color = MaterialTheme.colors.onSurface
-//                modifier = modifier.padding(8.dp, 0.dp)
+                color = MaterialTheme.colors.onSurface,
+                modifier = modifier.padding(8.dp, 0.dp)
             )
         }
     }
