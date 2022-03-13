@@ -33,43 +33,45 @@ fun HomeScreen() {
         topBar = { BVAppBar(title = "Home") },
         bottomBar = { BVBottomNavigation() }
     ) {
-        HomeScreenBody()
+        HomeScreenBody(it)
     }
 }
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreenBody() {
-    LazyColumn(modifier = Modifier) {
-        items(count = 1) {
-            val pagerState = rememberPagerState()
-            HomeText(text = "Hot Votes")
-            HorizontalPager(
-                count = 5,
-                state = pagerState,
-                contentPadding = PaddingValues(horizontal = 32.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                HotVotesItem()
+fun HomeScreenBody(bottomNavPadding: PaddingValues) {
+    Box(modifier = Modifier.padding(bottomNavPadding)) {
+        LazyColumn(modifier = Modifier) {
+            items(count = 1) {
+                val pagerState = rememberPagerState()
+                HomeText(text = "Hot Votes")
+                HorizontalPager(
+                    count = 5,
+                    state = pagerState,
+                    contentPadding = PaddingValues(horizontal = 32.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    HotVotesItem()
+                }
+                HorizontalPagerIndicator(
+                    pagerState = pagerState,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                        .wrapContentWidth(align = Alignment.CenterHorizontally)
+                )
             }
-            HorizontalPagerIndicator(
-                pagerState = pagerState,
-                modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth()
-                    .wrapContentWidth(align = Alignment.CenterHorizontally)
-            )
-        }
-        stickyHeader {
-            HomeText(text = "New Votes")
+            stickyHeader {
+                HomeText(text = "New Votes")
 
-        }
-        items(count = 20) {
-            BVTextButton(text = "test",
-                onClick = {},
-                isSelected = false
-            )
+            }
+            items(count = 20) {
+                BVTextButton(text = "test",
+                    onClick = {},
+                    isSelected = false
+                )
+            }
         }
     }
 }

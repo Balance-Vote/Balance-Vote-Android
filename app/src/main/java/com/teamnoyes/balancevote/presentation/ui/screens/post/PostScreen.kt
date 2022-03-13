@@ -19,40 +19,41 @@ fun PostScreen() {
         topBar = { BVAppBar(title = "Post Vote") },
         bottomBar = { BVBottomNavigation() }
     ) {
-        Column(modifier = Modifier
-            .padding(16.dp)
-            .fillMaxSize()) {
-            BVInput(
-                enableButton = false,
-                hintMessage = "1",
-                keyboardAction = ImeAction.Next
-            )
-            Text(
-                text = "VS",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentWidth(align = Alignment.CenterHorizontally)
-                    .padding(16.dp),
-                fontSize = 28.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.padding(vertical = 8.dp))
-            BVInput(
-                enableButton = false,
-                hintMessage = "2",
-                keyboardAction = ImeAction.Send,
-                onSendButtonClick = {}
-            )
-            Column(
-                modifier = Modifier
-                .fillMaxSize()
-                .wrapContentSize(Alignment.BottomCenter)
-                .padding(vertical = 48.dp)) {
-                BVTextButton(
-                    text = "POST",
-                    onClick = {},
-                    isSelected = false
+        Box(modifier = Modifier.padding(it)) {
+            Column(modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize()) {
+                BVInput(
+                    enableButton = false,
+                    hintMessage = "1",
+                    keyboardAction = ImeAction.Next
                 )
+                Text(
+                    text = "VS",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentWidth(align = Alignment.CenterHorizontally)
+                        .padding(16.dp),
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.padding(vertical = 8.dp))
+                BVInput(
+                    enableButton = false,
+                    hintMessage = "2",
+                    keyboardAction = ImeAction.Send,
+                    onSendButtonClick = {}
+                )
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .wrapContentSize(Alignment.BottomCenter)) {
+                    BVTextButton(
+                        text = "POST",
+                        onClick = {},
+                        isSelected = false
+                    )
+                }
             }
         }
     }
