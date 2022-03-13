@@ -6,4 +6,8 @@
     // EntryScreen
     <string name="entry_hint_nickname">Please Input Your Nickname</string>
     <string name="entry_start">START</string>
+
+    // DetailVoteScreen
+    <string name="detail_vote_hint">Please Leave Your Comment</string>
+    <string name="detail_vote_header_comment">Comment</string>
 </resources>
