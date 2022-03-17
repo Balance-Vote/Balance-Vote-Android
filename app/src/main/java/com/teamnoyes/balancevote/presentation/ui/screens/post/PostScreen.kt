@@ -15,10 +15,7 @@ import com.teamnoyes.balancevote.presentation.ui.widget.*
 
 @Composable
 fun PostScreen() {
-    Scaffold(
-        topBar = { BVAppBar(title = "Post Vote") },
-        bottomBar = { BVBottomNavigation() }
-    ) {
+    Box(modifier = Modifier.padding(bottom = 48.dp)) {
         Column(modifier = Modifier
             .padding(16.dp)
             .fillMaxSize()) {
@@ -45,9 +42,8 @@ fun PostScreen() {
             )
             Column(
                 modifier = Modifier
-                .fillMaxSize()
-                .wrapContentSize(Alignment.BottomCenter)
-                .padding(vertical = 48.dp)) {
+                    .fillMaxSize()
+                    .wrapContentSize(Alignment.BottomCenter)) {
                 BVTextButton(
                     text = "POST",
                     onClick = {},

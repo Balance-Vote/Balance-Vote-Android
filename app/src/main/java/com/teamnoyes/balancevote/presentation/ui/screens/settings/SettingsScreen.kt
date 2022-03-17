@@ -20,38 +20,36 @@ import com.teamnoyes.balancevote.presentation.ui.widget.BVTextButton
 @Composable
 fun SettingsScreen() {
     val context = LocalContext.current
-    Scaffold(
-        topBar = { BVAppBar(title = "Settings") },
-        bottomBar = { BVBottomNavigation() }
-    ) {
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)) {
-            BVTextButton(
-                text = "OSS",
-                onClick = { context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))},
-                isSelected = false,
-                horizontalAlignment = Arrangement.Start
-            )
-            BVTextButton(
-                text = "Credit",
-                onClick = {},
-                isSelected = false,
-                horizontalAlignment = Arrangement.Start
-            )
-            BVTextButton(
-                text = "Notification",
-                onClick = {},
-                isSelected = false,
-                horizontalAlignment = Arrangement.Start
-            )
-            BVTextButton(
-                text = "Language",
-                onClick = {},
-                isSelected = false,
-                horizontalAlignment = Arrangement.Start
-            )
-        }
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp)) {
+        BVTextButton(
+            text = "OSS",
+            onClick = {
+                context.startActivity(Intent(context,
+                    OssLicensesMenuActivity::class.java))
+            },
+            isSelected = false,
+            horizontalAlignment = Arrangement.Start
+        )
+        BVTextButton(
+            text = "Credit",
+            onClick = {},
+            isSelected = false,
+            horizontalAlignment = Arrangement.Start
+        )
+        BVTextButton(
+            text = "Notification",
+            onClick = {},
+            isSelected = false,
+            horizontalAlignment = Arrangement.Start
+        )
+        BVTextButton(
+            text = "Language",
+            onClick = {},
+            isSelected = false,
+            horizontalAlignment = Arrangement.Start
+        )
     }
 }
 
