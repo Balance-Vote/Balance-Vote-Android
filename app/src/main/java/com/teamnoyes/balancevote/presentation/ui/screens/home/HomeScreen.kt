@@ -29,12 +29,7 @@ import com.teamnoyes.balancevote.presentation.ui.widget.BVTextButton
 
 @Composable
 fun HomeScreen() {
-    Scaffold(
-        topBar = { BVAppBar(title = "Home") },
-        bottomBar = { BVBottomNavigation() }
-    ) {
-        HomeScreenBody(it)
-    }
+    HomeScreenBody(bottomNavPadding = PaddingValues(bottom = 48.dp))
 }
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
@@ -109,7 +104,7 @@ fun HotVotesItem() {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PreviewHomeScreen() {
     HomeScreen()
