@@ -78,6 +78,7 @@ fun BVAppBarPreview(darkTheme: Boolean) {
     BalanceVoteTheme(darkTheme) {
         BVAppBar(
             title = "Test",
+            isNavigationOn = true
         )
     }
 }

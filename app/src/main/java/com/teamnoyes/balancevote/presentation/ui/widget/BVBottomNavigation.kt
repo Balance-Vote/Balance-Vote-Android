@@ -2,20 +2,11 @@ package com.teamnoyes.balancevote.presentation.ui.widget
 
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.teamnoyes.balancevote.R
-import com.teamnoyes.balancevote.presentation.ui.screens.home.HomeScreen
-import com.teamnoyes.balancevote.presentation.ui.screens.post.PostScreen
-import com.teamnoyes.balancevote.presentation.ui.screens.settings.SettingsScreen
 
 enum class Screen(val title: String, var icon: Int, var route: String) {
     HOME("Home", R.drawable.ic_home, "home"),
@@ -66,11 +57,7 @@ fun BVBottomNavigation(currentRoute: String, navigateToRoute: (String) -> Unit) 
     }
 }
 
-fun NavGraphBuilder.addHomeGraph() {
-    composable(Screen.HOME.route) { HomeScreen() }
-    composable(Screen.POST.route) { PostScreen() }
-    composable(Screen.SETTINGS.route) { SettingsScreen() }
-}
+
 
 @Preview
 @Composable
