@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.teamnoyes.balancevote"
-        minSdk 21
+        minSdk 23
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -66,6 +66,8 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+
     implementation "com.google.accompanist:accompanist-pager:0.23.1"
     implementation "com.google.accompanist:accompanist-pager-indicators:0.23.1"
     implementation "com.google.accompanist:accompanist-appcompat-theme:0.23.1"
@@ -76,4 +78,16 @@ dependencies {
 
     implementation "com.google.dagger:hilt-android:2.40.5"
     kapt "com.google.dagger:hilt-android-compiler:2.40.5"
+
+    implementation "io.reactivex.rxjava3:rxandroid:3.0.0"
+    implementation "io.reactivex.rxjava3:rxjava:3.1.4"
+
+    implementation "com.squareup.okhttp3:okhttp:4.9.1"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+    implementation "com.squareup.retrofit2:converter-scalars:2.9.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:2.9.0"
+    implementation "com.squareup.moshi:moshi:1.13.0"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
 }
