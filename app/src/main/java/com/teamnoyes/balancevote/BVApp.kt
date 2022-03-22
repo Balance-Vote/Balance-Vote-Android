@@ -4,12 +4,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.teamnoyes.balancevote.presentation.ui.screens.home.HomeScreen
+import com.teamnoyes.balancevote.presentation.ui.screens.home.HomeViewModel
 import com.teamnoyes.balancevote.presentation.ui.screens.post.PostScreen
 import com.teamnoyes.balancevote.presentation.ui.screens.settings.SettingsScreen
 import com.teamnoyes.balancevote.presentation.ui.screens.vote.VoteScreen
@@ -57,7 +59,10 @@ fun BVApp() {
 }
 
 fun NavGraphBuilder.addHomeGraph() {
-    composable(Screen.HOME.route) { HomeScreen() }
+    composable(Screen.HOME.route) {
+        val homeViewModel = hiltViewModel<HomeViewModel>()
+        HomeScreen(homeViewModel)
+    }
     composable(Screen.POST.route) { PostScreen() }
     composable(Screen.SETTINGS.route) { SettingsScreen() }
 }

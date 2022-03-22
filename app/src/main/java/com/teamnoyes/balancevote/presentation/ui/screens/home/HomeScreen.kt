@@ -6,9 +6,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,18 +18,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import com.teamnoyes.balancevote.R
-import com.teamnoyes.balancevote.presentation.ui.widget.BVAppBar
-import com.teamnoyes.balancevote.presentation.ui.widget.BVBottomNavigation
 import com.teamnoyes.balancevote.presentation.ui.widget.BVGraph
 import com.teamnoyes.balancevote.presentation.ui.widget.BVTextButton
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
+    val allVoteList = remember { mutableStateOf(homeViewModel.getAllVotePost()) }
     HomeScreenBody(bottomNavPadding = PaddingValues(bottom = 48.dp))
 }
 
