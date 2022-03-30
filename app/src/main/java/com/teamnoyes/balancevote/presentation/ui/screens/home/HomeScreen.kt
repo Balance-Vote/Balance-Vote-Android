@@ -19,23 +19,30 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.paging.PagingData
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import com.teamnoyes.balancevote.R
+import com.teamnoyes.balancevote.data.model.VotePost
 import com.teamnoyes.balancevote.presentation.ui.widget.BVGraph
 import com.teamnoyes.balancevote.presentation.ui.widget.BVTextButton
+import io.reactivex.rxjava3.core.Flowable
+import kotlinx.coroutines.reactive.asFlow
 
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
-    val allVoteList = remember { mutableStateOf(homeViewModel.getAllVotePost()) }
-    HomeScreenBody(bottomNavPadding = PaddingValues(bottom = 48.dp))
+    val allVotePostList = remember { mutableStateOf(homeViewModel.getPaging()) }
+    HomeScreenBody(pager = allVotePostList.value, bottomNavPadding = PaddingValues(bottom = 48.dp))
 }
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreenBody(bottomNavPadding: PaddingValues) {
+fun HomeScreenBody(pager: Flowable<PagingData<VotePost>>, bottomNavPadding: PaddingValues) {
+    val lazyPagingItems = pager.asFlow().collectAsLazyPagingItems()
     Box(modifier = Modifier.padding(bottomNavPadding)) {
         LazyColumn(modifier = Modifier) {
             items(count = 1) {
@@ -62,8 +69,8 @@ fun HomeScreenBody(bottomNavPadding: PaddingValues) {
                 HomeText(text = "New Votes")
 
             }
-            items(count = 20) {
-                BVTextButton(text = "test",
+            items(lazyPagingItems) { votePost ->
+                BVTextButton(text = "${votePost?.id} ${votePost?.selectionOne} vs ${votePost?.selectionTwo}",
                     onClick = {},
                     isSelected = false
                 )
