@@ -1,7 +1,6 @@
 package com.teamnoyes.balancevote.presentation.ui.screens.post
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,7 +14,7 @@ import com.teamnoyes.balancevote.presentation.ui.widget.*
 
 @Composable
 fun PostScreen() {
-    Box(modifier = Modifier.padding(bottom = 48.dp)) {
+    Box() {
         Column(modifier = Modifier
             .padding(16.dp)
             .fillMaxSize()) {

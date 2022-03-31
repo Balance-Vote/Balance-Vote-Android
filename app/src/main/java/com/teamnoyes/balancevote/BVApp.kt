@@ -25,7 +25,7 @@ fun BVApp() {
     ProvideWindowInsets {
         BalanceVoteTheme {
             val appState = rememberBVAppState()
-            val test = appState.test
+            val init = appState.init
             var turnTest = false
             Scaffold(
                 topBar = {

@@ -22,17 +22,13 @@ fun rememberBVAppState(
 @Stable
 class BVAppState(val navController: NavHostController) {
 
-    init {
-
-    }
-
     val topUpToOffs = Screen.values()
     private val topUpToOffRoutes = topUpToOffs.map { it.route }
 
     val isNavigationOff: Boolean
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination?.route in topUpToOffRoutes
 
-    val test: String?
+    val init: String?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination?.route
 
     val currentRoute: String?

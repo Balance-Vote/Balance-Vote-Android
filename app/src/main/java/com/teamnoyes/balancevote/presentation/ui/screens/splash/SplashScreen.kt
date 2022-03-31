@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -18,14 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
 
 @Composable
-fun SplashScreen() {
-    Scaffold {
-        SplashBody()
-    }
-}
-
-@Composable
-fun SplashBody(
+fun SplashScreen(
     modifier: Modifier = Modifier
 ) {
     Box(

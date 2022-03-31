@@ -36,14 +36,14 @@ import kotlinx.coroutines.reactive.asFlow
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     val allVotePostList = remember { mutableStateOf(homeViewModel.getPaging()) }
-    HomeScreenBody(pager = allVotePostList.value, bottomNavPadding = PaddingValues(bottom = 48.dp))
+    HomeScreenBody(pager = allVotePostList.value)
 }
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreenBody(pager: Flowable<PagingData<VotePost>>, bottomNavPadding: PaddingValues) {
+fun HomeScreenBody(pager: Flowable<PagingData<VotePost>>) {
     val lazyPagingItems = pager.asFlow().collectAsLazyPagingItems()
-    Box(modifier = Modifier.padding(bottomNavPadding)) {
+    Box() {
         LazyColumn(modifier = Modifier) {
             items(count = 1) {
                 val pagerState = rememberPagerState()
