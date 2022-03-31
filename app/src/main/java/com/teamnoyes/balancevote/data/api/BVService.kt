@@ -11,6 +11,6 @@ interface BVService {
     fun getAllVotePost(
         @Query("page") page: Int = 0,
         @Query("size") size: Int = 20,
-        @Query("sortBy") sortBy: String = "writer-asc",
+        @Query("sort") sort: String = "id,desc",
     ): Single<AllVotePostResponse>
 }

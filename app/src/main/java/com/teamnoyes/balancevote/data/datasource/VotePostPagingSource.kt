@@ -27,7 +27,7 @@ class VotePostPagingSource @Inject constructor(private val api: BVService) :
 //        이 값이 계속 null이 나와서 같은 값이 반복됨
         val nextPageNumber = params.key ?: 0
 
-        return api.getAllVotePost(params.key ?: 0, 10, "writer-asc").subscribeOn(Schedulers.io())
+        return api.getAllVotePost(params.key ?: 0, 20, "id,desc").subscribeOn(Schedulers.io())
             .map { result -> LoadResult.Page(data = result.content, null, nextPageNumber+1) }
     }
 
