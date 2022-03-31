@@ -1,7 +1,6 @@
 package com.teamnoyes.balancevote.presentation.ui.screens.post
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
