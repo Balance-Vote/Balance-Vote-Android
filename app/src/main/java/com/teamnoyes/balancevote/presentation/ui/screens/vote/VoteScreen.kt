@@ -1,7 +1,6 @@
 package com.teamnoyes.balancevote.presentation.ui.screens.vote
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,20 +13,10 @@ import com.teamnoyes.balancevote.presentation.ui.widget.BVTextButton
 import com.teamnoyes.balancevote.presentation.ui.widget.BVTextButtonRole
 
 @Composable
-fun VoteScreen() {
-    Scaffold() {
-        VoteBody(
-            leftTopic = "LEFT",
-            rightTopic = "RIGHT",
-        )
-    }
-}
-
-@Composable
-fun VoteBody(
+fun VoteScreen(
     modifier: Modifier = Modifier,
-    leftTopic: String,
-    rightTopic: String
+    leftTopic: String = "LEFT",
+    rightTopic: String = "RIGHT"
 ) {
     Column(
         modifier = modifier
