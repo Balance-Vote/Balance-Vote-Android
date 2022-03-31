@@ -14,7 +14,7 @@ import com.teamnoyes.balancevote.presentation.ui.widget.*
 
 @Composable
 fun PostScreen() {
-    Box(modifier = Modifier.padding(bottom = 48.dp)) {
+    Box() {
         Column(modifier = Modifier
             .padding(16.dp)
             .fillMaxSize()) {
