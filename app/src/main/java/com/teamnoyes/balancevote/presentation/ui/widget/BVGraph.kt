@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.PaintingStyle
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +35,8 @@ fun BVGraph(
     vote2: Int = 0,
 ) {
 //    vote의 source는 viewModel일 것이므로 별도의 상태 복원 처리는 하지 않음
+    val confinguration = LocalConfiguration.current
+    val screenWidth = confinguration.screenWidthDp
     var voteRed = vote1.toFloat()
     var voteBlue = vote2.toFloat()
 //    둘 다 실제 값이 0일 수도 있으니까 값 입력 안 받으면 랜덤 표시는 문제가 있음. 별도의 인자 사용
@@ -61,14 +64,14 @@ fun BVGraph(
                 val paintRed = Paint()
                 paintRed.apply {
                     color = Color.Red
-                    strokeWidth = 108F
+                    strokeWidth = screenWidth/8F
                     style = PaintingStyle.Stroke
                     strokeCap = StrokeCap.Round
                 }
                 val paintBlue = Paint()
                 paintBlue.apply {
                     color = Color.Blue
-                    strokeWidth = 108F
+                    strokeWidth = screenWidth/8F
                     style = PaintingStyle.Stroke
                     strokeCap = StrokeCap.Round
                 }
