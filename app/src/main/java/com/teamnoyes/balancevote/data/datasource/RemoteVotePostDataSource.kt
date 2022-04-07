@@ -7,5 +7,7 @@ import javax.inject.Singleton
 @Singleton
 class RemoteVotePostDataSource @Inject constructor(private val api: BVService) {
 
-    fun getAllVotePost() = api.getAllVotePost()
+    fun getMostCommentedPost() = api.getMostCommentedPost()
+
+    fun getMostVotedPost() = api.getMostVotedPost()
 }

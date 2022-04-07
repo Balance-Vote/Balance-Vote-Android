@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rxjava3.subscribeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,12 +37,33 @@ import kotlinx.coroutines.reactive.asFlow
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     val allVotePostList = remember { mutableStateOf(homeViewModel.getPaging()) }
-    HomeScreenBody(pager = allVotePostList.value)
+//    추후 개선 사항: api를 따로 받아도 좋지만, 한꺼번에 받으면 추후 확장(새로운 항목 추가 등)에 있어 유리할 듯 하다. List로 받아서 각각 생성 등..
+    val mostVoted = homeViewModel.mostVotedPost.subscribeAsState(initial = VotePost(
+        0L,
+        "",
+        "",
+        "",
+        "",
+        1,
+        1))
+    val mostCommented = homeViewModel.mostCommentedPost.subscribeAsState(initial = VotePost(
+        0L,
+        "",
+        "",
+        "",
+        "",
+        1,
+        1))
+    HomeScreenBody(pager = allVotePostList.value, mostVoted.value, mostCommented.value)
 }
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreenBody(pager: Flowable<PagingData<VotePost>>) {
+fun HomeScreenBody(
+    pager: Flowable<PagingData<VotePost>>,
+    mostVoted: VotePost?,
+    mostCommented: VotePost?,
+) {
     val lazyPagingItems = pager.asFlow().collectAsLazyPagingItems()
     Box() {
         LazyColumn(modifier = Modifier) {
@@ -49,13 +71,20 @@ fun HomeScreenBody(pager: Flowable<PagingData<VotePost>>) {
                 val pagerState = rememberPagerState()
                 HomeText(text = "Hot Votes")
                 HorizontalPager(
-                    count = 5,
+                    count = 2,
                     state = pagerState,
                     contentPadding = PaddingValues(horizontal = 32.dp),
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
-                    HotVotesItem()
+                    when (this.currentPage) {
+                        0 -> {
+                            HotVotesItem(mostVoted, stringResource(id = R.string.home_hot_most_voted))
+                        }
+                        1 -> {
+                            HotVotesItem(mostCommented, stringResource(id = R.string.home_hot_most_commented))
+                        }
+                    }
                 }
                 HorizontalPagerIndicator(
                     pagerState = pagerState,
@@ -93,7 +122,7 @@ fun HomeText(text: String) {
 }
 
 @Composable
-fun HotVotesItem() {
+fun HotVotesItem(votePost: VotePost?, title: String) {
 //    가로 길이를 기기의 가로 길이에 기반하도록 하고, 세로 길이는 가로 길이와 1:1로
 //    가로 길이에 맞게 그래프의 테두리 굵기 조절도 필요함
     Card(
@@ -105,9 +134,13 @@ fun HotVotesItem() {
         shape = RoundedCornerShape(32.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = stringResource(id = R.string.home_card_type))
-            Text(text = "Android vs iOS?", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-            BVGraph(isRandom = true)
+            Text(text = title)
+            Text(text = "${votePost?.selectionOne} vs ${votePost?.selectionTwo}",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold)
+            BVGraph(isRandom = votePost == null,
+                vote1 = votePost?.voteCntOne ?: 0,
+                vote2 = votePost?.voteCntTwo ?: 0)
         }
     }
 }

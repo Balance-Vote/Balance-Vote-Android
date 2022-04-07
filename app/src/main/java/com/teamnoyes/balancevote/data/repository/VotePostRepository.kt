@@ -11,8 +11,9 @@ class VotePostRepository @Inject constructor(
     private val remoteVotePostDataSource: RemoteVotePostDataSource,
     private val votePostPagingSource: VotePostPagingSource,
 ) {
+    fun getMostCommentedPost() = remoteVotePostDataSource.getMostCommentedPost()
 
-    fun getAllVotePost() = remoteVotePostDataSource.getAllVotePost()
+    fun getMostVotedPost() = remoteVotePostDataSource.getMostVotedPost()
 
     fun paging() = Pager(config = PagingConfig(pageSize = 20), pagingSourceFactory = { votePostPagingSource }).flowable
 }

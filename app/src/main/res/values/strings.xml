@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">BalanceVote</string>
-    <string name="home_card_type">Most Voted Topic</string>
+    <string name="home_hot_most_voted">Most Voted Topic</string>
+    <string name="home_hot_most_commented">Most Commented Topic</string>
     <string name="bv_text_field_empty">Can\'t post empty text</string>
 
     // EntryScreen

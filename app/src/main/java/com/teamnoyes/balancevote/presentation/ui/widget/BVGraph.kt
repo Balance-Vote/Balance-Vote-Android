@@ -50,8 +50,9 @@ fun BVGraph(
             voteRed = 1F
             voteBlue = 1F
         } else {
+            val temp = voteRed
             voteRed = voteRed / (voteRed + voteBlue) * 320
-            voteBlue = voteBlue / (voteRed + voteBlue) * 320
+            voteBlue = voteBlue / (temp + voteBlue) * 320
         }
     }
 //    box로 text와 겹치게 해보자
