@@ -79,10 +79,12 @@ fun HomeScreenBody(
                 ) {
                     when (this.currentPage) {
                         0 -> {
-                            HotVotesItem(mostVoted, stringResource(id = R.string.home_hot_most_voted))
+                            HotVotesItem(mostVoted,
+                                stringResource(id = R.string.home_hot_most_voted))
                         }
                         1 -> {
-                            HotVotesItem(mostCommented, stringResource(id = R.string.home_hot_most_commented))
+                            HotVotesItem(mostCommented,
+                                stringResource(id = R.string.home_hot_most_commented))
                         }
                     }
                 }
