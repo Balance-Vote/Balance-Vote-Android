@@ -33,7 +33,8 @@ fun DetailVoteScreen() {
         ) {
             BVInput(
                 enableButton = true,
-                hintMessage = stringResource(id = R.string.detail_vote_hint)
+                hintMessage = stringResource(id = R.string.detail_vote_hint),
+                onTextChanged = {}
             )
         }
     }

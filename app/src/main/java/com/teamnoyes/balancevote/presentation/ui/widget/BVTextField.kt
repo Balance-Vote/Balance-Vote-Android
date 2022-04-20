@@ -42,12 +42,13 @@ fun BVInput(
     enableButton: Boolean,
     hintMessage: String,
     keyboardAction: ImeAction = ImeAction.Send,
+    onTextChanged: (TextFieldValue) -> Unit,
     onSendButtonClick: (String) -> Unit = {},
 ) {
     var textState by remember { mutableStateOf(TextFieldValue()) }
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
-    val isFirst = remember { mutableStateOf(true)}
+    val isFirst = remember { mutableStateOf(true) }
 
     Column() {
         Row(
@@ -67,6 +68,7 @@ fun BVInput(
                     onTextChanged = {
                         textState = it
                         isFirst.value = false
+                        onTextChanged(it)
                     },
                     onSendButtonClick = {
                         onSendButtonClick(it.text)
@@ -178,7 +180,10 @@ fun PreviewTextFieldWithButton() {
             modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colors.background
         ) {
-            BVInput(enableButton = true, hintMessage = "Another Hint String Test", keyboardAction = ImeAction.Send) {}
+            BVInput(enableButton = true,
+                hintMessage = "Another Hint String Test",
+                keyboardAction = ImeAction.Send,
+                onTextChanged = {}) {}
         }
     }
 }
@@ -191,7 +196,10 @@ fun PreviewTextFieldWithoutButton() {
             modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colors.background
         ) {
-            BVInput(enableButton = false, hintMessage = "힌트 문자열 테스트", keyboardAction = ImeAction.Send) {}
+            BVInput(enableButton = false,
+                hintMessage = "힌트 문자열 테스트",
+                keyboardAction = ImeAction.Send,
+                onTextChanged = {}) {}
         }
     }
 }
