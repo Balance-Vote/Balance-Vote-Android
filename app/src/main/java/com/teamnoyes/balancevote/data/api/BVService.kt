@@ -1,9 +1,12 @@
 package com.teamnoyes.balancevote.data.api
 
 import com.teamnoyes.balancevote.data.model.VotePost
+import com.teamnoyes.balancevote.data.request.PostNewVoteRequest
 import com.teamnoyes.balancevote.data.response.AllVotePostResponse
 import io.reactivex.rxjava3.core.Single
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface BVService {
@@ -20,4 +23,7 @@ interface BVService {
 
     @GET("/post/most-voted")
     fun getMostVotedPost(@Query("count") count: Int = 1): Single<List<VotePost>>
+
+    @POST("/post/vote-post")
+    fun postNewVote(@Body postNewVoteRequest: PostNewVoteRequest): Single<String>
 }

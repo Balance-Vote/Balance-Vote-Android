@@ -13,6 +13,7 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.teamnoyes.balancevote.presentation.ui.screens.home.HomeScreen
 import com.teamnoyes.balancevote.presentation.ui.screens.home.HomeViewModel
 import com.teamnoyes.balancevote.presentation.ui.screens.post.PostScreen
+import com.teamnoyes.balancevote.presentation.ui.screens.post.PostViewModel
 import com.teamnoyes.balancevote.presentation.ui.screens.settings.SettingsScreen
 import com.teamnoyes.balancevote.presentation.ui.screens.vote.VoteScreen
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
@@ -63,7 +64,10 @@ fun NavGraphBuilder.addHomeGraph() {
         val homeViewModel = hiltViewModel<HomeViewModel>()
         HomeScreen(homeViewModel)
     }
-    composable(Screen.POST.route) { PostScreen() }
+    composable(Screen.POST.route) {
+        val postViewModel = hiltViewModel<PostViewModel>()
+        PostScreen(postViewModel)
+    }
     composable(Screen.SETTINGS.route) { SettingsScreen() }
 }
 
