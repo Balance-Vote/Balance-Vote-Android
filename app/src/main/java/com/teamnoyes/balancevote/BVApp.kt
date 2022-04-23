@@ -2,9 +2,12 @@ package com.teamnoyes.balancevote
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,12 +16,14 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.teamnoyes.balancevote.presentation.ui.screens.home.HomeScreen
 import com.teamnoyes.balancevote.presentation.ui.screens.home.HomeViewModel
 import com.teamnoyes.balancevote.presentation.ui.screens.post.PostScreen
+import com.teamnoyes.balancevote.presentation.ui.screens.post.PostViewModel
 import com.teamnoyes.balancevote.presentation.ui.screens.settings.SettingsScreen
 import com.teamnoyes.balancevote.presentation.ui.screens.vote.VoteScreen
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
 import com.teamnoyes.balancevote.presentation.ui.widget.BVAppBar
 import com.teamnoyes.balancevote.presentation.ui.widget.BVBottomNavigation
 import com.teamnoyes.balancevote.presentation.ui.widget.Screen
+import kotlinx.coroutines.launch
 
 @Composable
 fun BVApp() {
@@ -27,7 +32,10 @@ fun BVApp() {
             val appState = rememberBVAppState()
             val init = appState.init
             var turnTest = false
+            val scaffoldState = rememberScaffoldState()
+            val scope = rememberCoroutineScope()
             Scaffold(
+                scaffoldState = scaffoldState,
                 topBar = {
                     BVAppBar(
                         title = appState.currentRoute?.uppercase() ?: "",
@@ -50,7 +58,12 @@ fun BVApp() {
                     modifier = Modifier.padding(pv)
                 ) {
 //                    bvNavGraph(upPress = {})
-                    addHomeGraph()
+                    addHomeGraph(appState.navController) { msg ->
+                        scope.launch {
+                            scaffoldState.snackbarHostState
+                                .showSnackbar(msg)
+                        }
+                    }
                     turnTest = true
                 }
             }
@@ -58,12 +71,15 @@ fun BVApp() {
     }
 }
 
-fun NavGraphBuilder.addHomeGraph() {
+fun NavGraphBuilder.addHomeGraph(navController: NavController, snackbarEvent: (String) -> Unit) {
     composable(Screen.HOME.route) {
         val homeViewModel = hiltViewModel<HomeViewModel>()
         HomeScreen(homeViewModel)
     }
-    composable(Screen.POST.route) { PostScreen() }
+    composable(Screen.POST.route) {
+        val postViewModel = hiltViewModel<PostViewModel>()
+        PostScreen(postViewModel, navController, snackbarEvent)
+    }
     composable(Screen.SETTINGS.route) { SettingsScreen() }
 }
 

@@ -15,5 +15,9 @@ class VotePostRepository @Inject constructor(
 
     fun getMostVotedPost() = remoteVotePostDataSource.getMostVotedPost()
 
-    fun paging() = Pager(config = PagingConfig(pageSize = 20), pagingSourceFactory = { votePostPagingSource }).flowable
+    fun paging() = Pager(config = PagingConfig(pageSize = 20),
+        pagingSourceFactory = { votePostPagingSource }).flowable
+
+    fun postNewPost(selectionOne: String, selectionTwo: String, uuid: String) =
+        remoteVotePostDataSource.postNewVote(selectionOne, selectionTwo, uuid)
 }

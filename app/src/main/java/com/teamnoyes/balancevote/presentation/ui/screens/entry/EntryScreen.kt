@@ -63,7 +63,8 @@ fun EntryBody(
         ) {
             BVInput(
                 enableButton = false,
-                hintMessage = stringResource(id = R.string.entry_hint_nickname)
+                hintMessage = stringResource(id = R.string.entry_hint_nickname),
+                onTextChanged = {}
             )
 
             BVTextButton(
