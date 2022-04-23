@@ -14,16 +14,30 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.teamnoyes.balancevote.presentation.ui.widget.*
 
+data class PostNewVoteUiState(val isPosted: Boolean = false, val throwError: Boolean = false)
+
 @Composable
-fun PostScreen(viewModel: PostViewModel = viewModel()) {
+fun PostScreen(
+    viewModel: PostViewModel = viewModel(),
+    navController: NavController,
+    snackbarEvent: (String) -> Unit,
+) {
     val a = remember { mutableStateOf("") }
     val b = remember { mutableStateOf("") }
+    if (viewModel.postNewVoteUiState.value.isPosted) {
+        snackbarEvent("Success")
+        viewModel.postNewVoteUiState.value = PostNewVoteUiState(isPosted = false)
+        navController.navigate(Screen.HOME.route)
+    }
+    if (viewModel.postNewVoteUiState.value.throwError) {
+        snackbarEvent("Fail")
+        viewModel.postNewVoteUiState.value = PostNewVoteUiState(throwError = false)
+    }
     PostScreenBody(onSelectionOneChanged = { a.value = it.text },
         onSelectionTwoChanged = { b.value = it.text }) {
-        println(a.value)
-        println(b.value)
         viewModel.postNewVote(a.value, b.value, "0419Test")
     }
 }
@@ -32,7 +46,7 @@ fun PostScreen(viewModel: PostViewModel = viewModel()) {
 fun PostScreenBody(
     onSelectionOneChanged: (TextFieldValue) -> Unit,
     onSelectionTwoChanged: (TextFieldValue) -> Unit,
-    onPostVote: () -> Unit
+    onPostVote: () -> Unit,
 ) {
     Box() {
         Column(modifier = Modifier
@@ -42,7 +56,7 @@ fun PostScreenBody(
                 enableButton = false,
                 hintMessage = "1",
                 keyboardAction = ImeAction.Next,
-                onTextChanged = {onSelectionOneChanged(it)}
+                onTextChanged = { onSelectionOneChanged(it) }
             )
             Text(
                 text = "VS",
@@ -58,7 +72,7 @@ fun PostScreenBody(
                 enableButton = false,
                 hintMessage = "2",
                 keyboardAction = ImeAction.Send,
-                onTextChanged = {onSelectionTwoChanged(it)},
+                onTextChanged = { onSelectionTwoChanged(it) },
                 onSendButtonClick = {}
             )
             Column(
