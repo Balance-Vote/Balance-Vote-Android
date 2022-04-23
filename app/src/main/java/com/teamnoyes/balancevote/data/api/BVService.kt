@@ -25,5 +25,5 @@ interface BVService {
     fun getMostVotedPost(@Query("count") count: Int = 1): Single<List<VotePost>>
 
     @POST("/post/vote-post")
-    fun postNewVote(@Body postNewVoteRequest: PostNewVoteRequest): Single<String>
+    fun postNewVote(@Body postNewVoteRequest: PostNewVoteRequest): Single<VotePost>
 }
