@@ -38,22 +38,8 @@ import kotlinx.coroutines.reactive.asFlow
 fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     val allVotePostList = remember { mutableStateOf(homeViewModel.getPaging()) }
 //    추후 개선 사항: api를 따로 받아도 좋지만, 한꺼번에 받으면 추후 확장(새로운 항목 추가 등)에 있어 유리할 듯 하다. List로 받아서 각각 생성 등..
-    val mostVoted = homeViewModel.mostVotedPost.subscribeAsState(initial = VotePost(
-        0L,
-        "",
-        "",
-        "",
-        "",
-        1,
-        1))
-    val mostCommented = homeViewModel.mostCommentedPost.subscribeAsState(initial = VotePost(
-        0L,
-        "",
-        "",
-        "",
-        "",
-        1,
-        1))
+    val mostVoted = homeViewModel.mostVotedPost.subscribeAsState(initial = VotePost())
+    val mostCommented = homeViewModel.mostCommentedPost.subscribeAsState(initial = VotePost())
     HomeScreenBody(pager = allVotePostList.value, mostVoted.value, mostCommented.value)
 }
 
