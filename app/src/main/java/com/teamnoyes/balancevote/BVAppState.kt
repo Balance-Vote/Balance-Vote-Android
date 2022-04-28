@@ -8,7 +8,7 @@ import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.teamnoyes.balancevote.presentation.ui.widget.Screen
+import com.teamnoyes.balancevote.presentation.ui.widget.BottomNavScreen
 
 object BVDestinations {
     const val HOME = "home"
@@ -22,14 +22,17 @@ fun rememberBVAppState(
 @Stable
 class BVAppState(val navController: NavHostController) {
 
-    val topUpToOffs = Screen.values()
+    val topUpToOffs = BottomNavScreen.values()
     private val topUpToOffRoutes = topUpToOffs.map { it.route }
 
     val isNavigationOff: Boolean
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination?.route in topUpToOffRoutes
 
-    val init: String?
-        @Composable get() = navController.currentBackStackEntryAsState().value?.destination?.route
+    val barTabs = BottomNavScreen.values()
+    private val barTabsRoutes = barTabs.map { it.route }
+
+    val showBars: Boolean
+        @Composable get() = navController.currentBackStackEntryAsState().value?.destination?.route in barTabsRoutes
 
     val currentRoute: String?
         get() = navController.currentDestination?.route

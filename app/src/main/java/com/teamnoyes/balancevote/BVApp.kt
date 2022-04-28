@@ -22,7 +22,7 @@ import com.teamnoyes.balancevote.presentation.ui.screens.vote.VoteScreen
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
 import com.teamnoyes.balancevote.presentation.ui.widget.BVAppBar
 import com.teamnoyes.balancevote.presentation.ui.widget.BVBottomNavigation
-import com.teamnoyes.balancevote.presentation.ui.widget.Screen
+import com.teamnoyes.balancevote.presentation.ui.widget.BottomNavScreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -30,20 +30,22 @@ fun BVApp() {
     ProvideWindowInsets {
         BalanceVoteTheme {
             val appState = rememberBVAppState()
-            val init = appState.init
+            val showBars = appState.showBars
             var turnTest = false
             val scaffoldState = rememberScaffoldState()
             val scope = rememberCoroutineScope()
             Scaffold(
                 scaffoldState = scaffoldState,
                 topBar = {
-                    BVAppBar(
-                        title = appState.currentRoute?.uppercase() ?: "",
-                        isNavigationOn = !appState.isNavigationOff
-                    )
+                    if(showBars) {
+                        BVAppBar(
+                            title = appState.currentRoute?.uppercase() ?: "",
+                            isNavigationOn = !appState.isNavigationOff
+                        )
+                    }
                 },
                 bottomBar = {
-                    if (turnTest) {
+                    if (showBars) {
                         BVBottomNavigation(
                             currentRoute = appState.currentRoute ?: "",
                             navigateToRoute = appState::navigateBottomNav
@@ -72,30 +74,29 @@ fun BVApp() {
 }
 
 fun NavGraphBuilder.addHomeGraph(navController: NavController, snackbarEvent: (String) -> Unit) {
-    composable(Screen.HOME.route) {
+    composable(BottomNavScreen.HOME.route) {
         val homeViewModel = hiltViewModel<HomeViewModel>()
-        HomeScreen(homeViewModel)
+        HomeScreen(homeViewModel, navController)
     }
-    composable(Screen.POST.route) {
+    composable(BottomNavScreen.POST.route) {
         val postViewModel = hiltViewModel<PostViewModel>()
         PostScreen(postViewModel, navController, snackbarEvent)
     }
-    composable(Screen.SETTINGS.route) { SettingsScreen() }
+    composable(BottomNavScreen.SETTINGS.route) { SettingsScreen() }
 }
 
-fun NavGraphBuilder.addVoteGraph() {
-    composable(Vote.VOTE.route) { VoteScreen() }
-}
+//fun NavGraphBuilder.addVoteGraph() {
+//    composable(Vote.VOTE.route) { VoteScreen() }
+//}
 
-
-enum class Vote(val title: String, val route: String) {
+enum class VotePostScreen(val title: String, val route: String) {
     VOTE("Vote", "home/vote"),
     DETAIL("Detail", "home/detail")
 }
 
 // Home -> Vote 간의 Nested Graph. upPress: 상단 바의 뒤로 가기 버튼
 private fun NavGraphBuilder.bvNavGraph(upPress: () -> Unit) {
-    navigation(startDestination = Screen.HOME.route, route = BVDestinations.HOME) {
+    navigation(startDestination = BottomNavScreen.HOME.route, route = BVDestinations.HOME) {
 //        addHomeGraph()
     }
 }
