@@ -59,13 +59,13 @@ fun VoteScreen(
     }
 }
 
-@Preview(name = "VoteScreen Light")
+@Preview(name = "VoteScreen Light", showBackground = true, showSystemUi = true)
 @Composable
 fun VoteScreenPreviewLight() {
     VoteScreenPreview(darkTheme = false)
 }
 
-@Preview(name = "VoteScreen Dark")
+@Preview(name = "VoteScreen Dark", showBackground = true, showSystemUi = true)
 @Composable
 fun VoteScreenPreviewDark() {
     VoteScreenPreview(darkTheme = true)
