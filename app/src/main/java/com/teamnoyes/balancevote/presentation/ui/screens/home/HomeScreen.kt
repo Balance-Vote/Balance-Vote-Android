@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
@@ -35,12 +36,14 @@ import io.reactivex.rxjava3.core.Flowable
 import kotlinx.coroutines.reactive.asFlow
 
 @Composable
-fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
+fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavController) {
     val allVotePostList = remember { mutableStateOf(homeViewModel.getPaging()) }
 //    추후 개선 사항: api를 따로 받아도 좋지만, 한꺼번에 받으면 추후 확장(새로운 항목 추가 등)에 있어 유리할 듯 하다. List로 받아서 각각 생성 등..
     val mostVoted = homeViewModel.mostVotedPost.subscribeAsState(initial = VotePost())
     val mostCommented = homeViewModel.mostCommentedPost.subscribeAsState(initial = VotePost())
-    HomeScreenBody(pager = allVotePostList.value, mostVoted.value, mostCommented.value)
+    HomeScreenBody(pager = allVotePostList.value, mostVoted.value, mostCommented.value) {
+        navController.navigate("main/vote")
+    }
 }
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
@@ -49,6 +52,7 @@ fun HomeScreenBody(
     pager: Flowable<PagingData<VotePost>>,
     mostVoted: VotePost?,
     mostCommented: VotePost?,
+    onVotePostClicked: (VotePost) -> Unit,
 ) {
     val lazyPagingItems = pager.asFlow().collectAsLazyPagingItems()
     Box() {
@@ -88,7 +92,7 @@ fun HomeScreenBody(
             }
             items(lazyPagingItems) { votePost ->
                 BVTextButton(text = "${votePost?.id} ${votePost?.selectionOne} vs ${votePost?.selectionTwo}",
-                    onClick = {},
+                    onClick = { onVotePostClicked(votePost!!) },
                     isSelected = false
                 )
             }
@@ -136,5 +140,5 @@ fun HotVotesItem(votePost: VotePost?, title: String) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewHomeScreen() {
-    HomeScreen()
+//    HomeScreenBody(pager = , mostVoted = , mostCommented = , onVotePostClicked = )
 }

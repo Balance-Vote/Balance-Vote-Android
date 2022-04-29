@@ -14,21 +14,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.teamnoyes.balancevote.R
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
 import com.teamnoyes.balancevote.presentation.ui.widget.BVInput
 import com.teamnoyes.balancevote.presentation.ui.widget.BVTextButton
 
 @Composable
-fun EntryScreen() {
+fun EntryScreen(navController: NavController) {
     Scaffold() {
-        EntryBody()
+        EntryScreenBody(onClick = { navController.navigate("main") })
     }
 }
 
 @Composable
-fun EntryBody(
-    modifier: Modifier = Modifier
+fun EntryScreenBody(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -70,7 +72,7 @@ fun EntryBody(
             BVTextButton(
                 modifier = modifier.align(Alignment.BottomCenter),
                 text = stringResource(id = R.string.entry_start),
-                onClick = { },
+                onClick = onClick,
                 isSelected = false,
                 height = 112.dp,
                 fontSize = 36.sp
@@ -95,6 +97,6 @@ fun EntryScreenPreviewDark() {
 @Composable
 fun EntryScreenPreview(darkTheme: Boolean) {
     BalanceVoteTheme(darkTheme) {
-        EntryScreen()
+//        EntryScreen()
     }
 }

@@ -14,11 +14,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
 
 @Composable
 fun SplashScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController
 ) {
     Box(
         modifier = modifier
@@ -34,7 +36,7 @@ fun SplashScreen(
                 modifier = Modifier
                     .size(200.dp),
                 imageVector = Icons.Default.Home,
-                contentDescription = null,
+                contentDescription = null
             )
         }
     }
@@ -55,6 +57,6 @@ fun SplashScreenPreviewDark() {
 @Composable
 fun SplashScreenPreview(darkTheme: Boolean) {
     BalanceVoteTheme(darkTheme) {
-        SplashScreen()
+//        SplashScreen()
     }
 }
