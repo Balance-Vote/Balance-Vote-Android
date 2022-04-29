@@ -9,9 +9,9 @@ import androidx.compose.ui.unit.sp
 import com.teamnoyes.balancevote.R
 
 enum class BottomNavScreen(val title: String, var icon: Int, var route: String) {
-    HOME("Home", R.drawable.ic_home, "home"),
-    POST("Post", R.drawable.ic_add, "post"),
-    SETTINGS("Settings", R.drawable.ic_settings, "settings")
+    HOME("Home", R.drawable.ic_home, "main/home"),
+    POST("Post", R.drawable.ic_add, "main/post"),
+    SETTINGS("Settings", R.drawable.ic_settings, "main/settings")
 }
 
 @Composable

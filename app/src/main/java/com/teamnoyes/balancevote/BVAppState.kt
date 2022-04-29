@@ -10,10 +10,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.teamnoyes.balancevote.presentation.ui.widget.BottomNavScreen
 
-object BVDestinations {
-    const val HOME = "home"
-}
-
 @Composable
 fun rememberBVAppState(
     navController: NavHostController = rememberNavController(),
