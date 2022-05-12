@@ -23,7 +23,13 @@ import com.teamnoyes.balancevote.presentation.ui.widget.BVTextButton
 @Composable
 fun EntryScreen(navController: NavController) {
     Scaffold() {
-        EntryScreenBody(onClick = { navController.navigate("main") })
+        EntryScreenBody(onClick = {
+            navController.navigate("main") {
+                popUpTo("entry") {
+                    inclusive = true
+                }
+            }
+        })
     }
 }
 
