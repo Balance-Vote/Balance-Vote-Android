@@ -30,7 +30,7 @@ fun PostScreen(
     if (viewModel.postNewVoteUiState.value.isPosted) {
         snackbarEvent("Success")
         viewModel.postNewVoteUiState.value = PostNewVoteUiState(isPosted = false)
-        navController.navigate(Screen.HOME.route)
+        navController.navigate(BottomNavScreen.HOME.route)
     }
     if (viewModel.postNewVoteUiState.value.throwError) {
         snackbarEvent("Fail")

@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.teamnoyes.balancevote.R
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
 import com.teamnoyes.balancevote.presentation.ui.widget.BVComment
@@ -22,7 +23,7 @@ import com.teamnoyes.balancevote.presentation.ui.widget.TempModelBVComment
 import java.util.*
 
 @Composable
-fun DetailVoteScreen() {
+fun DetailVoteScreen(navController: NavController) {
     Column() {
         DetailVoteBody(modifier = Modifier.weight(1f))
 
@@ -179,6 +180,6 @@ fun DetailVoteScreenPreviewDark() {
 @Composable
 fun DetailVoteScreenPreview(darkTheme: Boolean) {
     BalanceVoteTheme(darkTheme) {
-        DetailVoteScreen()
+//        DetailVoteScreen()
     }
 }

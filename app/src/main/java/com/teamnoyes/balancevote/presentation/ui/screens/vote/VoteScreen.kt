@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
 import com.teamnoyes.balancevote.presentation.ui.widget.BVTextButton
 import com.teamnoyes.balancevote.presentation.ui.widget.BVTextButtonRole
@@ -16,7 +17,8 @@ import com.teamnoyes.balancevote.presentation.ui.widget.BVTextButtonRole
 fun VoteScreen(
     modifier: Modifier = Modifier,
     leftTopic: String = "LEFT",
-    rightTopic: String = "RIGHT"
+    rightTopic: String = "RIGHT",
+    navController: NavController
 ) {
     Column(
         modifier = modifier
@@ -59,13 +61,13 @@ fun VoteScreen(
     }
 }
 
-@Preview(name = "VoteScreen Light")
+@Preview(name = "VoteScreen Light", showBackground = true, showSystemUi = true)
 @Composable
 fun VoteScreenPreviewLight() {
     VoteScreenPreview(darkTheme = false)
 }
 
-@Preview(name = "VoteScreen Dark")
+@Preview(name = "VoteScreen Dark", showBackground = true, showSystemUi = true)
 @Composable
 fun VoteScreenPreviewDark() {
     VoteScreenPreview(darkTheme = true)
@@ -74,6 +76,6 @@ fun VoteScreenPreviewDark() {
 @Composable
 fun VoteScreenPreview(darkTheme: Boolean) {
     BalanceVoteTheme(darkTheme) {
-        VoteScreen()
+//        VoteScreen()
     }
 }

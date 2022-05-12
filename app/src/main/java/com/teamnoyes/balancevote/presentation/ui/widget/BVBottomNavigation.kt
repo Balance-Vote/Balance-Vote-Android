@@ -8,10 +8,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.teamnoyes.balancevote.R
 
-enum class Screen(val title: String, var icon: Int, var route: String) {
-    HOME("Home", R.drawable.ic_home, "home"),
-    POST("Post", R.drawable.ic_add, "post"),
-    SETTINGS("Settings", R.drawable.ic_settings, "settings")
+enum class BottomNavScreen(val title: String, var icon: Int, var route: String) {
+    HOME("Home", R.drawable.ic_home, "main/home"),
+    POST("Post", R.drawable.ic_add, "main/post"),
+    SETTINGS("Settings", R.drawable.ic_settings, "main/settings")
 }
 
 @Composable
@@ -19,7 +19,7 @@ fun BVBottomNavigation(currentRoute: String, navigateToRoute: (String) -> Unit) 
 //    navController 위치는 이를 참조해야 하는 모든 컴포저블이 액세스 할 수 있어야 함
 //    따라서 추후 이동할 필요 있음
 //    val navController = rememberNavController()
-    val items = listOf(Screen.HOME, Screen.POST, Screen.SETTINGS)
+    val items = listOf(BottomNavScreen.HOME, BottomNavScreen.POST, BottomNavScreen.SETTINGS)
 
     BottomNavigation(
         backgroundColor = Color.White,
