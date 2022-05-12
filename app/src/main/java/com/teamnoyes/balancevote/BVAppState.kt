@@ -18,17 +18,16 @@ fun rememberBVAppState(
 @Stable
 class BVAppState(val navController: NavHostController) {
 
-    val topUpToOffs = BottomNavScreen.values()
-    private val topUpToOffRoutes = topUpToOffs.map { it.route }
-
-    val isNavigationOff: Boolean
-        @Composable get() = navController.currentBackStackEntryAsState().value?.destination?.route in topUpToOffRoutes
-
-    val barTabs = BottomNavScreen.values()
-    private val barTabsRoutes = barTabs.map { it.route }
+    private val barTabs = BottomNavScreen.values()
+    private val upToTabs = VotePostScreen.values()
+    private val barTabsRoutes = barTabs.map { it.route } + upToTabs.map { it.route }
+    private val upToTabsRoutes = upToTabs.map { it.route }
 
     val showBars: Boolean
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination?.route in barTabsRoutes
+
+    val showUpToButton: Boolean
+        @Composable get() = navController.currentBackStackEntryAsState().value?.destination?.route in upToTabsRoutes
 
     val currentRoute: String?
         get() = navController.currentDestination?.route
@@ -45,10 +44,17 @@ class BVAppState(val navController: NavHostController) {
         }
     }
 
+    fun upPress() = navController.navigateUp()
+
     private val NavGraph.startDestination: NavDestination?
         get() = findNode(startDestinationId)
 
     private tailrec fun findStartDestination(graph: NavDestination): NavDestination {
         return if (graph is NavGraph) findStartDestination(graph.startDestination!!) else graph
     }
+}
+
+enum class VotePostScreen(val title: String, val route: String) {
+    VOTE("VOTE", "main/vote"),
+    DETAIL("DETAIL", "main/detail")
 }

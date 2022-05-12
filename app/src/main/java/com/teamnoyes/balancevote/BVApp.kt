@@ -33,21 +33,21 @@ fun BVApp() {
     ProvideWindowInsets {
         BalanceVoteTheme {
             val appState = rememberBVAppState()
-            val showBars = appState.showBars
             val scaffoldState = rememberScaffoldState()
             val scope = rememberCoroutineScope()
             Scaffold(
                 scaffoldState = scaffoldState,
                 topBar = {
-                    if (showBars) {
+                    if (appState.showBars) {
                         BVAppBar(
                             title = appState.currentRoute?.uppercase() ?: "",
-                            isNavigationOn = !appState.isNavigationOff
+                            isNavigationOn = appState.showUpToButton,
+                            onNavIconPressed = { appState.upPress() }
                         )
                     }
                 },
                 bottomBar = {
-                    if (showBars) {
+                    if (appState.showBars) {
                         BVBottomNavigation(
                             currentRoute = appState.currentRoute ?: "",
                             navigateToRoute = appState::navigateBottomNav
@@ -84,8 +84,8 @@ fun NavGraphBuilder.addMainGraph(navController: NavController, snackbarEvent: (S
             val homeViewModel = hiltViewModel<HomeViewModel>()
             HomeScreen(homeViewModel, navController)
         }
-        composable("main/vote") { VoteScreen(navController = navController) }
-        composable("main/detail") { DetailVoteScreen(navController) }
+        composable(VotePostScreen.VOTE.route) { VoteScreen(navController = navController) }
+        composable(VotePostScreen.DETAIL.route) { DetailVoteScreen(navController) }
         composable(BottomNavScreen.POST.route) {
             val postViewModel = hiltViewModel<PostViewModel>()
             PostScreen(postViewModel, navController, snackbarEvent)
