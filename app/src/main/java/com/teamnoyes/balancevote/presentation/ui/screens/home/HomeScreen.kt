@@ -42,7 +42,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavCon
     val mostVoted = homeViewModel.mostVotedPost.subscribeAsState(initial = VotePost())
     val mostCommented = homeViewModel.mostCommentedPost.subscribeAsState(initial = VotePost())
     HomeScreenBody(pager = allVotePostList.value, mostVoted.value, mostCommented.value) {
-        navController.navigate("main/vote")
+        navController.navigate("main/vote/${it.id}/${it.selectionOne}/${it.selectionTwo}")
     }
 }
 

@@ -16,9 +16,10 @@ import com.teamnoyes.balancevote.presentation.ui.widget.BVTextButtonRole
 @Composable
 fun VoteScreen(
     modifier: Modifier = Modifier,
+    navController: NavController,
+    id: Long,
     leftTopic: String = "LEFT",
-    rightTopic: String = "RIGHT",
-    navController: NavController
+    rightTopic: String = "RIGHT"
 ) {
     Column(
         modifier = modifier
