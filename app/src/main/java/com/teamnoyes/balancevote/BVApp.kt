@@ -19,6 +19,7 @@ import com.teamnoyes.balancevote.presentation.ui.screens.post.PostViewModel
 import com.teamnoyes.balancevote.presentation.ui.screens.settings.SettingsScreen
 import com.teamnoyes.balancevote.presentation.ui.screens.splash.SplashScreen
 import com.teamnoyes.balancevote.presentation.ui.screens.vote.VoteScreen
+import com.teamnoyes.balancevote.presentation.ui.screens.vote.VoteViewModel
 import com.teamnoyes.balancevote.presentation.ui.screens.vote.detail.DetailVoteScreen
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
 import com.teamnoyes.balancevote.presentation.ui.widget.BVAppBar
@@ -83,10 +84,12 @@ fun NavGraphBuilder.addMainGraph(navController: NavController, snackbarEvent: (S
             HomeScreen(homeViewModel, navController)
         }
         composable(VotePostScreen.VOTE.route,
-            arguments = listOf(navArgument("id") { type = NavType.LongType },
+            arguments = listOf(navArgument("postId") { type = NavType.StringType },
                 navArgument("left") { type = NavType.StringType },
                 navArgument("right") { type = NavType.StringType })) {
-            VoteScreen(id = it.arguments?.getLong("id") ?: 0L,
+            val voteViewModel = hiltViewModel<VoteViewModel>()
+            VoteScreen(viewModel = voteViewModel,
+                postId = it.arguments?.getString("postId") ?: "",
                 leftTopic = it.arguments?.getString("left") ?: "",
                 rightTopic = it.arguments?.getString("right") ?: "",
                 navController = navController)

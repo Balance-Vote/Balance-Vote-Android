@@ -2,6 +2,7 @@ package com.teamnoyes.balancevote.data.api
 
 import com.teamnoyes.balancevote.data.model.VotePost
 import com.teamnoyes.balancevote.data.request.PostNewVoteRequest
+import com.teamnoyes.balancevote.data.request.PostVoteSelection
 import com.teamnoyes.balancevote.data.response.AllVotePostResponse
 import io.reactivex.rxjava3.core.Single
 import retrofit2.http.Body
@@ -26,4 +27,7 @@ interface BVService {
 
     @POST("/post/vote-post")
     fun postNewVote(@Body postNewVoteRequest: PostNewVoteRequest): Single<VotePost>
+
+    @POST("/post/vote-post/{postId}")
+    fun postVoteSelection(@Query("postId") postId: String, @Body postVoteSelection: PostVoteSelection): Single<Boolean>
 }
