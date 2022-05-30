@@ -15,9 +15,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
-    private val votePostRepository: VotePostRepository,
-) : ViewModel() {
+class HomeViewModel @Inject constructor(private val votePostRepository: VotePostRepository) :
+    ViewModel() {
 
     val mostVotedPost: Single<VotePost> =
         votePostRepository.getMostVotedPost().map { it.first() }.subscribeOn(Schedulers.io())
