@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.teamnoyes.balancevote.R
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
 import com.teamnoyes.balancevote.presentation.ui.widget.BVComment
@@ -84,7 +85,9 @@ fun VoteTitle(modifier: Modifier, leftTopic: String, rightTopic: String) {
 @Composable
 fun VoteBody(modifier: Modifier) {
     Surface(
-        modifier = modifier.fillMaxWidth().height(450.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(450.dp),
         elevation = 4.dp,
         shape = RoundedCornerShape(8.dp)
     ) {
@@ -165,13 +168,13 @@ fun ChildComment(modifier: Modifier) {
     }
 }
 
-@Preview(name = "DetailVoteScreen Light")
+@Preview(name = "DetailVoteScreen Light", showBackground = true)
 @Composable
 fun DetailVoteScreenPreviewLight() {
     DetailVoteScreenPreview(darkTheme = false)
 }
 
-@Preview(name = "DetailVoteScreen Dark")
+@Preview(name = "DetailVoteScreen Dark", showBackground = true, backgroundColor = 0x303030)
 @Composable
 fun DetailVoteScreenPreviewDark() {
     DetailVoteScreenPreview(darkTheme = true)
@@ -180,6 +183,6 @@ fun DetailVoteScreenPreviewDark() {
 @Composable
 fun DetailVoteScreenPreview(darkTheme: Boolean) {
     BalanceVoteTheme(darkTheme) {
-//        DetailVoteScreen()
+        DetailVoteScreen(rememberNavController())
     }
 }
