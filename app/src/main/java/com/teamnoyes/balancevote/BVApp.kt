@@ -7,11 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
+import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.teamnoyes.balancevote.presentation.ui.screens.entry.EntryScreen
 import com.teamnoyes.balancevote.presentation.ui.screens.home.HomeScreen
@@ -21,6 +19,7 @@ import com.teamnoyes.balancevote.presentation.ui.screens.post.PostViewModel
 import com.teamnoyes.balancevote.presentation.ui.screens.settings.SettingsScreen
 import com.teamnoyes.balancevote.presentation.ui.screens.splash.SplashScreen
 import com.teamnoyes.balancevote.presentation.ui.screens.vote.VoteScreen
+import com.teamnoyes.balancevote.presentation.ui.screens.vote.VoteViewModel
 import com.teamnoyes.balancevote.presentation.ui.screens.vote.detail.DetailVoteScreen
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
 import com.teamnoyes.balancevote.presentation.ui.widget.BVAppBar
@@ -84,7 +83,18 @@ fun NavGraphBuilder.addMainGraph(navController: NavController, snackbarEvent: (S
             val homeViewModel = hiltViewModel<HomeViewModel>()
             HomeScreen(homeViewModel, navController)
         }
-        composable(VotePostScreen.VOTE.route) { VoteScreen(navController = navController) }
+        composable(VotePostScreen.VOTE.route,
+            arguments = listOf(navArgument("postId") { type = NavType.StringType },
+                navArgument("left") { type = NavType.StringType },
+                navArgument("right") { type = NavType.StringType })) {
+            val voteViewModel = hiltViewModel<VoteViewModel>()
+            VoteScreen(viewModel = voteViewModel,
+                postId = it.arguments?.getString("postId") ?: "",
+                leftTopic = it.arguments?.getString("left") ?: "",
+                rightTopic = it.arguments?.getString("right") ?: "",
+                navController = navController,
+                snackbarEvent = snackbarEvent)
+        }
         composable(VotePostScreen.DETAIL.route) { DetailVoteScreen(navController) }
         composable(BottomNavScreen.POST.route) {
             val postViewModel = hiltViewModel<PostViewModel>()

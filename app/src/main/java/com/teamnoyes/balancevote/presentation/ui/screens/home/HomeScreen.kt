@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
@@ -42,7 +43,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavCon
     val mostVoted = homeViewModel.mostVotedPost.subscribeAsState(initial = VotePost())
     val mostCommented = homeViewModel.mostCommentedPost.subscribeAsState(initial = VotePost())
     HomeScreenBody(pager = allVotePostList.value, mostVoted.value, mostCommented.value) {
-        navController.navigate("main/vote")
+        navController.navigate("main/vote/${it.postId}/${it.selectionOne}/${it.selectionTwo}")
     }
 }
 
@@ -140,5 +141,5 @@ fun HotVotesItem(votePost: VotePost?, title: String) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewHomeScreen() {
-//    HomeScreenBody(pager = , mostVoted = , mostCommented = , onVotePostClicked = )
+    HomeScreen(viewModel(), rememberNavController())
 }
