@@ -92,7 +92,8 @@ fun NavGraphBuilder.addMainGraph(navController: NavController, snackbarEvent: (S
                 postId = it.arguments?.getString("postId") ?: "",
                 leftTopic = it.arguments?.getString("left") ?: "",
                 rightTopic = it.arguments?.getString("right") ?: "",
-                navController = navController)
+                navController = navController,
+                snackbarEvent = snackbarEvent)
         }
         composable(VotePostScreen.DETAIL.route) { DetailVoteScreen(navController) }
         composable(BottomNavScreen.POST.route) {
