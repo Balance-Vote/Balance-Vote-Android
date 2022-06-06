@@ -18,4 +18,6 @@ class RemoteVotePostDataSource @Inject constructor(private val api: BVService) {
 
     fun postVoteSelection(postId: String, selection: String, uuid: String) =
         api.postVoteSelection(postId, PostVoteSelection(selection, uuid))
+
+    fun getVotePost(postId: String) = api.getVotePost(postId)
 }

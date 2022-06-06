@@ -29,5 +29,11 @@ interface BVService {
     fun postNewVote(@Body postNewVoteRequest: PostNewVoteRequest): Single<VotePost>
 
     @POST("/post/vote-post/{postId}")
-    fun postVoteSelection(@Query("postId") postId: String, @Body postVoteSelection: PostVoteSelection): Single<Boolean>
+    fun postVoteSelection(
+        @Query("postId") postId: String,
+        @Body postVoteSelection: PostVoteSelection,
+    ): Single<Boolean>
+
+    @GET("/post/vote-post/{postId}")
+    fun getVotePost(@Query("postId") postId: String): Single<VotePost>
 }

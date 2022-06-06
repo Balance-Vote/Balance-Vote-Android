@@ -23,4 +23,6 @@ class VotePostRepository @Inject constructor(
 
     fun postVoteSelection(postId: String, selection: String, uuid: String) =
         remoteVotePostDataSource.postVoteSelection(postId, selection, uuid)
+
+    fun getVotePost(postId: String) = remoteVotePostDataSource.getVotePost(postId)
 }
