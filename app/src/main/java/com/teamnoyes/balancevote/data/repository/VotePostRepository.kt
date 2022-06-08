@@ -25,4 +25,7 @@ class VotePostRepository @Inject constructor(
         remoteVotePostDataSource.postVoteSelection(postId, selection, uuid)
 
     fun getVotePost(postId: String) = remoteVotePostDataSource.getVotePost(postId)
+
+    fun postParentComment(comment: String, postId: String, uuid: String) =
+        remoteVotePostDataSource.postParentComment(comment, postId, uuid)
 }

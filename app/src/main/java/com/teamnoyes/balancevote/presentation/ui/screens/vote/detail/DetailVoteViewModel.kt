@@ -3,6 +3,7 @@ package com.teamnoyes.balancevote.presentation.ui.screens.vote.detail
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.teamnoyes.balancevote.data.model.Comment
 import com.teamnoyes.balancevote.data.model.VotePost
 import com.teamnoyes.balancevote.data.repository.VotePostRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,10 +37,26 @@ class DetailVoteViewModel @Inject constructor(private val repository: VotePostRe
             }))
     }
 
-//        댓글을 조회해야 함 - 포스트 댓글 조회 - Observable
+    //        댓글을 조회해야 함 - 포스트 댓글 조회 - Observable
+    fun getCommentList(postId: String) {
 
-//        댓글을 등록해야 함 - 부모 댓글 생성 - POST 후 갱신이 필요함!
+    }
 
+    //        댓글을 등록해야 함 - 부모 댓글 생성 - POST 후 갱신이 필요함!
+    fun postParentComment(comment: String, postId: String, uuid: String) {
+        disposable.add(repository.postParentComment(comment, postId, uuid)
+            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableSingleObserver<Comment>() {
+                override fun onSuccess(t: Comment) {
+                    Log.d(TAG, t.toString())
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.d(TAG, e.stackTraceToString())
+                }
+
+            }))
+    }
 
     companion object {
         const val TAG = "DetailVoteViewModel"

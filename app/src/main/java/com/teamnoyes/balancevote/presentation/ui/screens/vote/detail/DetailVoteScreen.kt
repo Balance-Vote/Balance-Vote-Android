@@ -44,7 +44,11 @@ fun DetailVoteScreen(
             BVInput(
                 enableButton = true,
                 hintMessage = stringResource(id = R.string.detail_vote_hint),
-                onTextChanged = {}
+                onSendButtonClick = { comment ->
+                    viewModel.postParentComment(comment,
+                        postId,
+                        "uuidTest")
+                }
             )
         }
     }
@@ -119,10 +123,16 @@ fun VoteBody(modifier: Modifier, votePost: VotePost) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                val percentOne = votePost.voteCntOne.toFloat() / (votePost.voteCntOne+votePost.voteCntTwo) * 100
-                val percentTwo = votePost.voteCntTwo.toFloat() / (votePost.voteCntOne+votePost.voteCntTwo) * 100
-                TopicData(modifier = modifier, topic = votePost.selectionOne, percent = percentOne.toInt())
-                TopicData(modifier = modifier, topic = votePost.selectionTwo, percent = percentTwo.toInt())
+                val percentOne =
+                    votePost.voteCntOne.toFloat() / (votePost.voteCntOne + votePost.voteCntTwo) * 100
+                val percentTwo =
+                    votePost.voteCntTwo.toFloat() / (votePost.voteCntOne + votePost.voteCntTwo) * 100
+                TopicData(modifier = modifier,
+                    topic = votePost.selectionOne,
+                    percent = percentOne.toInt())
+                TopicData(modifier = modifier,
+                    topic = votePost.selectionTwo,
+                    percent = percentTwo.toInt())
             }
         }
     }
