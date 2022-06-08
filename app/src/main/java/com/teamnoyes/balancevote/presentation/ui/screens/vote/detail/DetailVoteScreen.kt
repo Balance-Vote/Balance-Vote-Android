@@ -3,6 +3,7 @@ package com.teamnoyes.balancevote.presentation.ui.screens.vote.detail
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.teamnoyes.balancevote.R
+import com.teamnoyes.balancevote.data.model.Comment
 import com.teamnoyes.balancevote.data.model.VotePost
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
 import com.teamnoyes.balancevote.presentation.ui.widget.BVComment
@@ -32,9 +34,12 @@ fun DetailVoteScreen(
     postId: String,
 ) {
     viewModel.getVotePost(postId)
+    viewModel.getCommentList(postId)
 //    수정 필요. DetailVoteBody만 드러나야함
     Column() {
-        DetailVoteBody(modifier = Modifier.weight(1f), viewModel.votePost.value)
+        DetailVoteBody(modifier = Modifier.weight(1f),
+            viewModel.votePost.value,
+            viewModel.commentList)
 
         Surface(
             modifier = Modifier
@@ -59,6 +64,7 @@ fun DetailVoteScreen(
 fun DetailVoteBody(
     modifier: Modifier = Modifier,
     votePost: VotePost,
+    commentList: List<Comment>,
 ) {
     LazyColumn(modifier = modifier.padding(12.dp, 0.dp)) {
         items(count = 1) {
@@ -76,8 +82,8 @@ fun DetailVoteBody(
                 fontSize = 24.sp
             )
         }
-        items(count = 20) {
-            ParentComment(modifier = modifier)
+        items(commentList) { comment ->
+            ParentComment(modifier = modifier, comment = comment)
         }
     }
 }
@@ -153,22 +159,22 @@ fun TopicData(modifier: Modifier, topic: String, percent: Int) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ParentComment(modifier: Modifier) {
+fun ParentComment(modifier: Modifier, comment: Comment) {
     BVComment(
         data = TempModelBVComment(
-            uid = 0,
-            author = "Tester",
-            picked = "딱복",
+            uid = comment.id,
+            author = comment.uuid,
+            picked = "",
             time = Date(),
-            content = "내용\nTEST\nTest\nTEst",
-            like = 0,
+            content = comment.cmtText,
+            like = comment.likeCnt,
             isLiked = false
         )
     )
-
-    for (i in 0 until 20) {
-        ChildComment(modifier = modifier)
-    }
+//
+//    for (i in 0 until 20) {
+//        ChildComment(modifier = modifier)
+//    }
 
 }
 
