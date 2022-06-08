@@ -56,5 +56,5 @@ class BVAppState(val navController: NavHostController) {
 
 enum class VotePostScreen(val title: String, val route: String) {
     VOTE("VOTE", "main/vote/{postId}/{left}/{right}"),
-    DETAIL("DETAIL", "main/detail")
+    DETAIL("DETAIL", "main/detail/{postId}")
 }

@@ -11,7 +11,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-const val BASE_URL = "http://ec2-3-36-94-154.ap-northeast-2.compute.amazonaws.com:8080"
+const val BASE_URL = "http://ec2-3-39-6-89.ap-northeast-2.compute.amazonaws.com:8080"
 
 @Module
 @InstallIn(SingletonComponent::class)

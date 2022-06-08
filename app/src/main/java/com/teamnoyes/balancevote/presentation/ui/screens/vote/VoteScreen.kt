@@ -32,7 +32,7 @@ fun VoteScreen(
     if (viewModel.postVoteSelectionUiState.value.isPosted) {
         snackbarEvent("Success")
         viewModel.postVoteSelectionUiState.value = PostVoteSelectionUiState(isPosted = false)
-        navController.navigate(VotePostScreen.DETAIL.route) {
+        navController.navigate("main/detail/$postId") {
             popUpTo(BottomNavScreen.HOME.route)
         }
     }

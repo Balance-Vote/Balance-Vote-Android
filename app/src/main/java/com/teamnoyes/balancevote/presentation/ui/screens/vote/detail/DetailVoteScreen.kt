@@ -3,10 +3,12 @@ package com.teamnoyes.balancevote.presentation.ui.screens.vote.detail
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -16,6 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.teamnoyes.balancevote.R
+import com.teamnoyes.balancevote.data.model.Comment
+import com.teamnoyes.balancevote.data.model.VotePost
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
 import com.teamnoyes.balancevote.presentation.ui.widget.BVComment
 import com.teamnoyes.balancevote.presentation.ui.widget.BVGraph
@@ -24,9 +28,18 @@ import com.teamnoyes.balancevote.presentation.ui.widget.TempModelBVComment
 import java.util.*
 
 @Composable
-fun DetailVoteScreen(navController: NavController) {
+fun DetailVoteScreen(
+    viewModel: DetailVoteViewModel = viewModel(),
+    navController: NavController,
+    postId: String,
+) {
+    viewModel.getVotePost(postId)
+    viewModel.getCommentList(postId)
+//    수정 필요. DetailVoteBody만 드러나야함
     Column() {
-        DetailVoteBody(modifier = Modifier.weight(1f))
+        DetailVoteBody(modifier = Modifier.weight(1f),
+            viewModel.votePost.value,
+            viewModel.commentList)
 
         Surface(
             modifier = Modifier
@@ -36,7 +49,11 @@ fun DetailVoteScreen(navController: NavController) {
             BVInput(
                 enableButton = true,
                 hintMessage = stringResource(id = R.string.detail_vote_hint),
-                onTextChanged = {}
+                onSendButtonClick = { comment ->
+                    viewModel.postParentComment(comment,
+                        postId,
+                        "uuidTest")
+                }
             )
         }
     }
@@ -45,14 +62,18 @@ fun DetailVoteScreen(navController: NavController) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DetailVoteBody(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    votePost: VotePost,
+    commentList: List<Comment>,
 ) {
     LazyColumn(modifier = modifier.padding(12.dp, 0.dp)) {
         items(count = 1) {
-            VoteTitle(modifier = modifier, leftTopic = "Left", rightTopic = "Right")
+            VoteTitle(modifier = modifier,
+                leftTopic = votePost.selectionOne,
+                rightTopic = votePost.selectionTwo)
         }
         items(count = 1) {
-            VoteBody(modifier = modifier)
+            VoteBody(modifier = modifier, votePost = votePost)
         }
         items(count = 1) {
             Text(
@@ -61,8 +82,8 @@ fun DetailVoteBody(
                 fontSize = 24.sp
             )
         }
-        items(count = 20) {
-            ParentComment(modifier = modifier)
+        items(commentList) { comment ->
+            ParentComment(modifier = modifier, comment = comment)
         }
     }
 }
@@ -83,7 +104,7 @@ fun VoteTitle(modifier: Modifier, leftTopic: String, rightTopic: String) {
 }
 
 @Composable
-fun VoteBody(modifier: Modifier) {
+fun VoteBody(modifier: Modifier, votePost: VotePost) {
     Surface(
         modifier = modifier
             .fillMaxWidth()
@@ -102,14 +123,22 @@ fun VoteBody(modifier: Modifier) {
                     .padding(4.dp)
                     .height(360.dp)
             ) {
-                BVGraph(isRandom = false, 24, 76)
+                BVGraph(isRandom = false, vote1 = votePost.voteCntOne, vote2 = votePost.voteCntTwo)
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                TopicData(modifier = modifier, topic = "Left", percent = 24)
-                TopicData(modifier = modifier, topic = "Right", percent = 76)
+                val percentOne =
+                    votePost.voteCntOne.toFloat() / (votePost.voteCntOne + votePost.voteCntTwo) * 100
+                val percentTwo =
+                    votePost.voteCntTwo.toFloat() / (votePost.voteCntOne + votePost.voteCntTwo) * 100
+                TopicData(modifier = modifier,
+                    topic = votePost.selectionOne,
+                    percent = percentOne.toInt())
+                TopicData(modifier = modifier,
+                    topic = votePost.selectionTwo,
+                    percent = percentTwo.toInt())
             }
         }
     }
@@ -130,22 +159,22 @@ fun TopicData(modifier: Modifier, topic: String, percent: Int) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ParentComment(modifier: Modifier) {
+fun ParentComment(modifier: Modifier, comment: Comment) {
     BVComment(
         data = TempModelBVComment(
-            uid = 0,
-            author = "Tester",
-            picked = "딱복",
+            uid = comment.id,
+            author = comment.uuid,
+            picked = "",
             time = Date(),
-            content = "내용\nTEST\nTest\nTEst",
-            like = 0,
+            content = comment.cmtText,
+            like = comment.likeCnt,
             isLiked = false
         )
     )
-    
-    for (i in 0 until 20) {
-        ChildComment(modifier = modifier)
-    }
+//
+//    for (i in 0 until 20) {
+//        ChildComment(modifier = modifier)
+//    }
 
 }
 
@@ -183,6 +212,6 @@ fun DetailVoteScreenPreviewDark() {
 @Composable
 fun DetailVoteScreenPreview(darkTheme: Boolean) {
     BalanceVoteTheme(darkTheme) {
-        DetailVoteScreen(rememberNavController())
+//        DetailVoteScreen(rememberNavController(), "")
     }
 }

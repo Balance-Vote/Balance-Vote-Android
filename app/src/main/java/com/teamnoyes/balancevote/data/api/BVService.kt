@@ -1,14 +1,13 @@
 package com.teamnoyes.balancevote.data.api
 
+import com.teamnoyes.balancevote.data.model.Comment
 import com.teamnoyes.balancevote.data.model.VotePost
 import com.teamnoyes.balancevote.data.request.PostNewVoteRequest
+import com.teamnoyes.balancevote.data.request.PostParentCommentRequest
 import com.teamnoyes.balancevote.data.request.PostVoteSelection
 import com.teamnoyes.balancevote.data.response.AllVotePostResponse
 import io.reactivex.rxjava3.core.Single
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface BVService {
     //    이후 Pagination 적용 필요. 현재는 Single로 전체 받기
@@ -29,5 +28,17 @@ interface BVService {
     fun postNewVote(@Body postNewVoteRequest: PostNewVoteRequest): Single<VotePost>
 
     @POST("/post/vote-post/{postId}")
-    fun postVoteSelection(@Query("postId") postId: String, @Body postVoteSelection: PostVoteSelection): Single<Boolean>
+    fun postVoteSelection(
+        @Query("postId") postId: String,
+        @Body postVoteSelection: PostVoteSelection,
+    ): Single<Boolean>
+
+    @GET("/post/vote-post/{postId}")
+    fun getVotePost(@Query("postId") postId: String): Single<VotePost>
+
+    @GET("/comment/get-comment/parent/post-id/{postId}")
+    fun getCommentList(@Path("postId") postId: String): Single<List<Comment>>
+
+    @POST("/comment/create-comment/parent")
+    fun postParentComment(@Body postParentCommentRequest: PostParentCommentRequest): Single<Comment>
 }

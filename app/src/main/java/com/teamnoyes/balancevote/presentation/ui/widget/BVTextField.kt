@@ -42,7 +42,7 @@ fun BVInput(
     enableButton: Boolean,
     hintMessage: String,
     keyboardAction: ImeAction = ImeAction.Send,
-    onTextChanged: (TextFieldValue) -> Unit,
+    onTextChanged: (TextFieldValue) -> Unit = {},
     onSendButtonClick: (String) -> Unit = {},
 ) {
     var textState by remember { mutableStateOf(TextFieldValue()) }
@@ -73,6 +73,7 @@ fun BVInput(
                     onSendButtonClick = {
                         onSendButtonClick(it.text)
                         textState = TextFieldValue("")
+                        isFirst.value = true
                         focusManager.clearFocus()
                     },
                     focus = focusRequester
