@@ -2,10 +2,11 @@ package com.teamnoyes.balancevote.presentation.ui.screens.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -51,52 +52,54 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), navController: NavCon
 @Composable
 fun HomeScreenBody(
     pager: Flowable<PagingData<VotePost>>,
-    mostVoted: VotePost?,
-    mostCommented: VotePost?,
+    mostVoted: VotePost,
+    mostCommented: VotePost,
     onVotePostClicked: (VotePost) -> Unit,
 ) {
     val lazyPagingItems = pager.asFlow().collectAsLazyPagingItems()
-    Box() {
-        LazyColumn(modifier = Modifier) {
-            items(count = 1) {
-                val pagerState = rememberPagerState()
-                HomeText(text = "Hot Votes")
-                HorizontalPager(
-                    count = 2,
-                    state = pagerState,
-                    contentPadding = PaddingValues(horizontal = 32.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    when (this.currentPage) {
-                        0 -> {
-                            HotVotesItem(mostVoted,
-                                stringResource(id = R.string.home_hot_most_voted))
+    LazyColumn(modifier = Modifier) {
+        items(count = 1) {
+            val pagerState = rememberPagerState()
+            HomeText(text = "Hot Votes")
+            HorizontalPager(
+                count = 2,
+                state = pagerState,
+                contentPadding = PaddingValues(horizontal = 32.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                when (this.currentPage) {
+                    0 -> {
+                        HotVotesItem(mostVoted,
+                            stringResource(id = R.string.home_hot_most_voted)) {
+                            onVotePostClicked(mostVoted)
                         }
-                        1 -> {
-                            HotVotesItem(mostCommented,
-                                stringResource(id = R.string.home_hot_most_commented))
+                    }
+                    1 -> {
+                        HotVotesItem(mostCommented,
+                            stringResource(id = R.string.home_hot_most_commented)) {
+                            onVotePostClicked(mostCommented)
                         }
                     }
                 }
-                HorizontalPagerIndicator(
-                    pagerState = pagerState,
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                        .wrapContentWidth(align = Alignment.CenterHorizontally)
-                )
             }
-            stickyHeader {
-                HomeText(text = "New Votes")
+            HorizontalPagerIndicator(
+                pagerState = pagerState,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+                    .wrapContentWidth(align = Alignment.CenterHorizontally)
+            )
+        }
+        stickyHeader {
+            HomeText(text = "New Votes")
 
-            }
-            items(lazyPagingItems) { votePost ->
-                BVTextButton(text = "${votePost?.id} ${votePost?.selectionOne} vs ${votePost?.selectionTwo}",
-                    onClick = { onVotePostClicked(votePost!!) },
-                    isSelected = false
-                )
-            }
+        }
+        items(lazyPagingItems) { votePost ->
+            BVTextButton(text = "${votePost?.id} ${votePost?.selectionOne} vs ${votePost?.selectionTwo}",
+                onClick = { onVotePostClicked(votePost!!) },
+                isSelected = false
+            )
         }
     }
 }
@@ -115,26 +118,22 @@ fun HomeText(text: String) {
 }
 
 @Composable
-fun HotVotesItem(votePost: VotePost?, title: String) {
+fun HotVotesItem(votePost: VotePost?, title: String, onVotePostClicked: () -> Unit) {
 //    가로 길이를 기기의 가로 길이에 기반하도록 하고, 세로 길이는 가로 길이와 1:1로
 //    가로 길이에 맞게 그래프의 테두리 굵기 조절도 필요함
-    Card(
-        modifier = Modifier
-            .width(320.dp)
-            .height(320.dp)
-            .padding(horizontal = 8.dp),
-        elevation = 4.dp,
-        shape = RoundedCornerShape(32.dp)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = title)
-            Text(text = "${votePost?.selectionOne} vs ${votePost?.selectionTwo}",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold)
-            BVGraph(isRandom = votePost == null,
-                vote1 = votePost?.voteCntOne ?: 0,
-                vote2 = votePost?.voteCntTwo ?: 0)
-        }
+    Column(modifier = Modifier
+        .width(320.dp)
+        .height(320.dp)
+        .clickable(onClick = onVotePostClicked)
+        .border(2.dp, Color.DarkGray, RoundedCornerShape(32.dp))
+        .padding(16.dp)) {
+        Text(text = title)
+        Text(text = "${votePost?.selectionOne} vs ${votePost?.selectionTwo}",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold)
+        BVGraph(isRandom = votePost == null,
+            vote1 = votePost?.voteCntOne ?: 0,
+            vote2 = votePost?.voteCntTwo ?: 0)
     }
 }
 
