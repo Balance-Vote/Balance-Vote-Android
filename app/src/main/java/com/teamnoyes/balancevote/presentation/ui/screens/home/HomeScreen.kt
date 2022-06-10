@@ -32,6 +32,7 @@ import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import com.teamnoyes.balancevote.R
 import com.teamnoyes.balancevote.data.model.VotePost
+import com.teamnoyes.balancevote.presentation.ui.theme.BackGround
 import com.teamnoyes.balancevote.presentation.ui.widget.BVGraph
 import com.teamnoyes.balancevote.presentation.ui.widget.BVTextButton
 import io.reactivex.rxjava3.core.Flowable
@@ -96,7 +97,7 @@ fun HomeScreenBody(
 
         }
         items(lazyPagingItems) { votePost ->
-            BVTextButton(text = "${votePost?.id} ${votePost?.selectionOne} vs ${votePost?.selectionTwo}",
+            BVTextButton(modifier = Modifier.padding(vertical = 12.dp, horizontal = 24.dp), text = "${votePost?.selectionOne} vs ${votePost?.selectionTwo}",
                 onClick = { onVotePostClicked(votePost!!) },
                 isSelected = false
             )
@@ -109,10 +110,9 @@ fun HomeText(text: String) {
     Text(
         text = text,
         modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.White)
-            .padding(8.dp),
-        fontSize = 28.sp,
+            .fillMaxWidth().background(BackGround)
+            .padding(vertical = 8.dp, horizontal = 24.dp),
+        fontSize = 20.sp,
         fontWeight = FontWeight.Bold
     )
 }
@@ -125,7 +125,7 @@ fun HotVotesItem(votePost: VotePost?, title: String, onVotePostClicked: () -> Un
         .width(320.dp)
         .height(320.dp)
         .clickable(onClick = onVotePostClicked)
-        .border(2.dp, Color.DarkGray, RoundedCornerShape(32.dp))
+        .border(2.dp, Color.DarkGray, RoundedCornerShape(36.dp))
         .padding(16.dp)) {
         Text(text = title)
         Text(text = "${votePost?.selectionOne} vs ${votePost?.selectionTwo}",
