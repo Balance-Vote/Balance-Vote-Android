@@ -21,6 +21,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.teamnoyes.balancevote.presentation.ui.theme.newBlue
+import com.teamnoyes.balancevote.presentation.ui.theme.newRed
 import kotlin.random.Random
 
 /**
@@ -64,15 +66,15 @@ fun BVGraph(
                 val rect = Rect(Offset.Zero, this.size)
                 val paintRed = Paint()
                 paintRed.apply {
-                    color = Color.Red
-                    strokeWidth = screenWidth/8F
+                    color = newRed
+                    strokeWidth = screenWidth/10F
                     style = PaintingStyle.Stroke
                     strokeCap = StrokeCap.Round
                 }
                 val paintBlue = Paint()
                 paintBlue.apply {
-                    color = Color.Blue
-                    strokeWidth = screenWidth/8F
+                    color = newBlue
+                    strokeWidth = screenWidth/10F
                     style = PaintingStyle.Stroke
                     strokeCap = StrokeCap.Round
                 }
