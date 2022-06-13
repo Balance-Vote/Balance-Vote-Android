@@ -18,9 +18,9 @@ import com.teamnoyes.balancevote.presentation.ui.theme.BackGround
 import com.teamnoyes.balancevote.presentation.ui.theme.MainColor
 
 enum class BottomNavScreen(val title: String, var icon: Int, var route: String) {
-    HOME("Home", R.drawable.ic_home, "main/home"),
-    POST("Post", R.drawable.ic_add, "main/post"),
-    SETTINGS("Settings", R.drawable.ic_settings, "main/settings")
+    HOME("Home", R.drawable.ic_round_home, "main/home"),
+    POST("Post", R.drawable.ic_round_add, "main/post"),
+    SETTINGS("Settings", R.drawable.ic_round_settings, "main/settings")
 }
 
 @Composable
