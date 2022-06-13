@@ -40,7 +40,7 @@ fun BVApp() {
                 topBar = {
                     if (appState.showBars) {
                         BVAppBar(
-                            title = appState.currentRoute?.uppercase() ?: "",
+                            title = appState.currentTitle ?: "",
                             isNavigationOn = appState.showUpToButton,
                             onNavIconPressed = { appState.upPress() }
                         )

@@ -23,6 +23,13 @@ class BVAppState(val navController: NavHostController) {
     private val barTabsRoutes = barTabs.map { it.route } + upToTabs.map { it.route }
     private val upToTabsRoutes = upToTabs.map { it.route }
 
+    private val routeToTitle =
+        hashMapOf<String, String>("main/home" to "Discover Votes",
+            "main/post" to "Post a Vote",
+            "main/settings" to "Settings",
+            "main/vote/{postId}/{left}/{right}" to "Select Your Position",
+            "main/detail/{postId}" to "Result")
+
     val showBars: Boolean
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination?.route in barTabsRoutes
 
@@ -31,6 +38,9 @@ class BVAppState(val navController: NavHostController) {
 
     val currentRoute: String?
         get() = navController.currentDestination?.route
+
+    val currentTitle: String?
+        get() = routeToTitle[navController.currentDestination?.route]
 
     fun navigateBottomNav(route: String) {
         if (route != currentRoute) {
