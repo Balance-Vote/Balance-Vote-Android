@@ -28,24 +28,24 @@ fun SettingsScreen() {
             isSelected = false,
             horizontalAlignment = Arrangement.Start
         )
-        BVTextButton(
-            text = "Credit",
-            onClick = {},
-            isSelected = false,
-            horizontalAlignment = Arrangement.Start
-        )
-        BVTextButton(
-            text = "Notification",
-            onClick = {},
-            isSelected = false,
-            horizontalAlignment = Arrangement.Start
-        )
-        BVTextButton(
-            text = "Language",
-            onClick = {},
-            isSelected = false,
-            horizontalAlignment = Arrangement.Start
-        )
+//        BVTextButton(
+//            text = "Credit",
+//            onClick = {},
+//            isSelected = false,
+//            horizontalAlignment = Arrangement.Start
+//        )
+//        BVTextButton(
+//            text = "Notification",
+//            onClick = {},
+//            isSelected = false,
+//            horizontalAlignment = Arrangement.Start
+//        )
+//        BVTextButton(
+//            text = "Language",
+//            onClick = {},
+//            isSelected = false,
+//            horizontalAlignment = Arrangement.Start
+//        )
     }
 }
 
