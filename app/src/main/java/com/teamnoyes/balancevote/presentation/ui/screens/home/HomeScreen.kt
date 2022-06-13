@@ -97,7 +97,8 @@ fun HomeScreenBody(
 
         }
         items(lazyPagingItems) { votePost ->
-            BVTextButton(modifier = Modifier.padding(vertical = 12.dp, horizontal = 24.dp), text = "${votePost?.selectionOne} vs ${votePost?.selectionTwo}",
+            BVTextButton(modifier = Modifier.padding(vertical = 12.dp, horizontal = 24.dp),
+                text = "${votePost?.selectionOne} vs ${votePost?.selectionTwo}",
                 onClick = { onVotePostClicked(votePost!!) },
                 isSelected = false
             )
@@ -110,7 +111,8 @@ fun HomeText(text: String) {
     Text(
         text = text,
         modifier = Modifier
-            .fillMaxWidth().background(BackGround)
+            .fillMaxWidth()
+            .background(BackGround)
             .padding(vertical = 8.dp, horizontal = 24.dp),
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold
@@ -124,6 +126,7 @@ fun HotVotesItem(votePost: VotePost?, title: String, onVotePostClicked: () -> Un
     Column(modifier = Modifier
         .width(320.dp)
         .height(320.dp)
+        .background(Color.White, RoundedCornerShape(36.dp))
         .clickable(onClick = onVotePostClicked)
         .border(2.dp, Color.DarkGray, RoundedCornerShape(36.dp))
         .padding(16.dp)) {
