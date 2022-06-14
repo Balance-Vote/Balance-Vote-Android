@@ -1,6 +1,7 @@
 package com.teamnoyes.balancevote.presentation.ui.screens.vote.detail
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -12,6 +13,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -20,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.teamnoyes.balancevote.R
 import com.teamnoyes.balancevote.data.model.Comment
 import com.teamnoyes.balancevote.data.model.VotePost
+import com.teamnoyes.balancevote.presentation.ui.theme.BackGround
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
 import com.teamnoyes.balancevote.presentation.ui.widget.BVComment
 import com.teamnoyes.balancevote.presentation.ui.widget.BVGraph
@@ -37,7 +40,8 @@ fun DetailVoteScreen(
     viewModel.getCommentList(postId)
 //    수정 필요. DetailVoteBody만 드러나야함
     Column() {
-        DetailVoteBody(modifier = Modifier.weight(1f),
+        DetailVoteBody(modifier = Modifier
+            .weight(1f),
             viewModel.votePost.value,
             viewModel.commentList)
 
@@ -66,7 +70,7 @@ fun DetailVoteBody(
     votePost: VotePost,
     commentList: List<Comment>,
 ) {
-    LazyColumn(modifier = modifier.padding(12.dp, 0.dp)) {
+    LazyColumn(modifier = modifier) {
         items(count = 1) {
             VoteTitle(modifier = modifier,
                 leftTopic = votePost.selectionOne,
@@ -77,13 +81,14 @@ fun DetailVoteBody(
         }
         items(count = 1) {
             Text(
-                modifier = modifier.padding(0.dp, 12.dp),
+                modifier = modifier.padding(horizontal = 24.dp, vertical = 16.dp),
                 text = stringResource(id = R.string.detail_vote_header_comment),
-                fontSize = 24.sp
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
             )
         }
         items(commentList) { comment ->
-            ParentComment(modifier = modifier, comment = comment)
+            ParentComment(modifier = modifier.padding(horizontal = 24.dp), comment = comment)
         }
     }
 }
@@ -91,15 +96,15 @@ fun DetailVoteBody(
 @Composable
 fun VoteTitle(modifier: Modifier, leftTopic: String, rightTopic: String) {
     Row(
-        modifier = modifier.padding(0.dp, 8.dp),
+        modifier = modifier.padding(horizontal = 24.dp, vertical = 8.dp),
     ) {
-        Text(text = leftTopic, fontSize = 24.sp)
+        Text(text = leftTopic, fontSize = 24.sp, fontWeight = FontWeight.ExtraBold)
         Text(
             text = "VS", modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .padding(8.dp, 0.dp)
         )
-        Text(text = rightTopic, fontSize = 24.sp)
+        Text(text = rightTopic, fontSize = 24.sp, fontWeight = FontWeight.ExtraBold)
     }
 }
 
@@ -108,9 +113,10 @@ fun VoteBody(modifier: Modifier, votePost: VotePost) {
     Surface(
         modifier = modifier
             .fillMaxWidth()
-            .height(450.dp),
+            .height(360.dp)
+            .padding(horizontal = 24.dp),
         elevation = 4.dp,
-        shape = RoundedCornerShape(8.dp)
+        shape = RoundedCornerShape(16.dp)
     ) {
         Column(
             modifier = modifier.padding(8.dp),
@@ -119,11 +125,9 @@ fun VoteBody(modifier: Modifier, votePost: VotePost) {
         ) {
 
             Surface(
-                modifier = Modifier
-                    .padding(4.dp)
-                    .height(360.dp)
+                modifier = Modifier.height(280.dp)
             ) {
-                BVGraph(isRandom = false, vote1 = votePost.voteCntOne, vote2 = votePost.voteCntTwo)
+                BVGraph(isRandom = false, vote1 = votePost.voteCntTwo, vote2 = votePost.voteCntOne)
             }
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -161,6 +165,7 @@ fun TopicData(modifier: Modifier, topic: String, percent: Int) {
 @Composable
 fun ParentComment(modifier: Modifier, comment: Comment) {
     BVComment(
+        modifier = modifier,
         data = TempModelBVComment(
             uid = comment.id,
             author = comment.uuid,

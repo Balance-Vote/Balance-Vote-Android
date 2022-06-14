@@ -61,7 +61,7 @@ fun BVGraph(
     Box(modifier = Modifier.fillMaxSize()) {
         Canvas(Modifier
             .fillMaxSize()
-            .padding(40.dp)) {
+            .padding(16.dp)) {
             drawIntoCanvas {
                 val rect = Rect(Offset.Zero, this.size)
                 val paintRed = Paint()
