@@ -12,7 +12,9 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,14 +30,14 @@ fun BVAppBar(
     Surface(
         shape = RectangleShape,
         modifier = modifier,
-        elevation = 4.dp
+        elevation = 0.dp
     ) {
         Row(
             modifier = modifier
                 .fillMaxWidth()
                 .height(56.dp)
-                .background(MaterialTheme.colors.background)
-                .padding(8.dp),
+                .background(Color.White)
+                .padding(horizontal = 16.dp, vertical = 8.dp),
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -54,7 +56,7 @@ fun BVAppBar(
             Text(
                 text = title,
                 fontSize = 16.sp,
-                color = MaterialTheme.colors.onSurface,
+                fontWeight = FontWeight.Bold,
                 modifier = modifier.padding(8.dp)
             )
         }

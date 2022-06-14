@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -40,7 +41,7 @@ fun BVApp() {
                 topBar = {
                     if (appState.showBars) {
                         BVAppBar(
-                            title = appState.currentRoute?.uppercase() ?: "",
+                            title = appState.currentTitle ?: "",
                             isNavigationOn = appState.showUpToButton,
                             onNavIconPressed = { appState.upPress() }
                         )
@@ -64,9 +65,11 @@ fun BVApp() {
                         SplashScreen(navController = appState.navController)
                     }
                     composable("entry") {
-                        EntryScreen(navController = appState.navController)
+                        EntryScreen(navController = appState.navController) {
+                            appState.nickname.value = it
+                        }
                     }
-                    addMainGraph(appState.navController) { msg ->
+                    addMainGraph(appState.navController, appState.nickname) { msg ->
                         scope.launch {
                             scaffoldState.snackbarHostState
                                 .showSnackbar(msg)
@@ -78,7 +81,11 @@ fun BVApp() {
     }
 }
 
-fun NavGraphBuilder.addMainGraph(navController: NavController, snackbarEvent: (String) -> Unit) {
+fun NavGraphBuilder.addMainGraph(
+    navController: NavController,
+    nickname: MutableState<String>,
+    snackbarEvent: (String) -> Unit,
+) {
     navigation(startDestination = "main/home", route = "main") {
         composable(BottomNavScreen.HOME.route) {
             val homeViewModel = hiltViewModel<HomeViewModel>()
@@ -94,17 +101,19 @@ fun NavGraphBuilder.addMainGraph(navController: NavController, snackbarEvent: (S
                 leftTopic = it.arguments?.getString("left") ?: "",
                 rightTopic = it.arguments?.getString("right") ?: "",
                 navController = navController,
-                snackbarEvent = snackbarEvent)
+                snackbarEvent = snackbarEvent,
+                nickname = nickname)
         }
         composable(VotePostScreen.DETAIL.route) {
             val detailVoteViewModel = hiltViewModel<DetailVoteViewModel>()
             DetailVoteScreen(viewModel = detailVoteViewModel,
                 navController = navController,
-                postId = it.arguments?.getString("postId") ?: "")
+                postId = it.arguments?.getString("postId") ?: "",
+                nickname = nickname)
         }
         composable(BottomNavScreen.POST.route) {
             val postViewModel = hiltViewModel<PostViewModel>()
-            PostScreen(postViewModel, navController, snackbarEvent)
+            PostScreen(postViewModel, navController, nickname, snackbarEvent)
         }
         composable(BottomNavScreen.SETTINGS.route) { SettingsScreen() }
     }

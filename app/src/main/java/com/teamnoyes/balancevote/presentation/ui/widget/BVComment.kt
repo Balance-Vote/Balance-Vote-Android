@@ -14,9 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
 import java.util.*
 
@@ -29,7 +31,7 @@ data class TempModelBVComment(
     val nestedCommentList: List<TempModelBVComment> = emptyList(),
     val content: String,
     val like: Int,
-    var isLiked: Boolean
+    var isLiked: Boolean,
 ) {
     fun getTime() = run {
         val elapsedTime = (Date().time - time.time) / 1000
@@ -88,81 +90,67 @@ fun BVComment(
         color = Color.White,
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .wrapContentHeight()
+            .padding(vertical = 8.dp)
     ) {
-        Row(
-
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp, vertical = 16.dp)
+                .clickable(onClick = onCommentPressed)
         ) {
-            Column(
-                modifier = modifier
-                    .weight(9f)
-                    .clickable(onClick = onCommentPressed)
-            ) {
-                Row(
-                    modifier = modifier.padding(8.dp, 4.dp)
-                ) {
-                    Column(
-                        modifier = modifier
-                            .weight(1f)
-                    ) {
-                        Text(
-                            text = data.author
-                        )
-                    }
-                    Spacer(modifier = modifier.size(space))
-
-                    Column(
-                        modifier = modifier
-                            .weight(1f)
-                    ) {
-                        Text(
-                            text = data.picked
-                        )
-                    }
-                    Spacer(modifier = modifier.size(space))
-
-                    Column(
-                        modifier = modifier
-                            .weight(1f)
-                    ) {
-                        Text(
-                            text = data.getTime()
-                        )
-                    }
-                }
-
-                Row(
-                    modifier = modifier.padding(8.dp, 4.dp)
-                ) {
-                    Text(text = data.content)
-                }
-            }
-
-            Spacer(modifier = Modifier.size(space))
-
-            Column(
-                modifier = modifier
-                    .weight(1f)
-                    .padding(8.dp, 4.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                if (data.isLiked) {
-                    Icon(
-                        modifier = Modifier.clickable(onClick = onLikedPressed),
-                        imageVector = Icons.Default.Favorite, contentDescription = null
-                    )
-                } else {
-                    Icon(
-                        modifier = Modifier.clickable(onClick = onLikedPressed),
-                        imageVector = Icons.Default.FavoriteBorder, contentDescription = null
-                    )
-                }
-                Text(text = data.like.toString())
-            }
+            Text(text = data.author, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.padding(vertical = space))
+            Text(text = data.content)
         }
     }
 }
+
+//                    Spacer(modifier = modifier.size(space))
+//
+//                    Column(
+//                        modifier = modifier
+//                            .weight(1f)
+//                    ) {
+//                        Text(
+//                            text = data.picked
+//                        )
+//                    }
+//                    Spacer(modifier = modifier.size(space))
+//
+//                    Column(
+//                        modifier = modifier
+//                            .weight(1f)
+//                    ) {
+//                        Text(
+//                            text = data.getTime()
+//                        )
+//                    }
+
+
+//            Spacer(modifier = Modifier.size(space))
+//
+//            Column(
+//                modifier = modifier
+//                    .weight(1f)
+//                    .padding(8.dp, 4.dp),
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//                verticalArrangement = Arrangement.Center
+//            ) {
+//                if (data.isLiked) {
+//                    Icon(
+//                        modifier = Modifier.clickable(onClick = onLikedPressed),
+//                        imageVector = Icons.Default.Favorite, contentDescription = null
+//                    )
+//                } else {
+//                    Icon(
+//                        modifier = Modifier.clickable(onClick = onLikedPressed),
+//                        imageVector = Icons.Default.FavoriteBorder, contentDescription = null
+//                    )
+//                }
+//                Text(text = data.like.toString())
+//            }
+
 
 @Preview(name = "BVComment Light")
 @Composable

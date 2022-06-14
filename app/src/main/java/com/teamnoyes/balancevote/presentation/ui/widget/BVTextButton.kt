@@ -1,5 +1,6 @@
 package com.teamnoyes.balancevote.presentation.ui.widget
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
@@ -33,11 +35,11 @@ fun BVTextButton(
     isSelected: Boolean,
     role: BVTextButtonRole = BVTextButtonRole.NORMAL,
     height: Dp = 64.dp,
-    fontSize: TextUnit = 24.sp,
+    fontSize: TextUnit = 20.sp,
     horizontalAlignment: Arrangement.Horizontal = Arrangement.Center,
     verticalAlign: Alignment.Vertical = Alignment.CenterVertically,
     shape: Shape = RoundedCornerShape(8.dp),
-    elevation: Dp = 4.dp
+    elevation: Dp = 4.dp,
 ) {
     Surface(
         shape = shape,
@@ -58,8 +60,9 @@ fun BVTextButton(
         },
         modifier = modifier
             .fillMaxWidth()
-            .height(height = height),
-        elevation = elevation,
+            .height(height = height)
+            .border(2.dp, Color.DarkGray, RoundedCornerShape(16.dp)),
+        elevation = 0.dp,
     ) {
         Row(
             horizontalArrangement = horizontalAlignment,
@@ -70,7 +73,9 @@ fun BVTextButton(
                 text = text,
                 fontSize = fontSize,
                 color = MaterialTheme.colors.onSurface,
-                modifier = modifier.padding(8.dp, 0.dp)
+                modifier = modifier.padding(8.dp, 0.dp),
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
             )
         }
     }
