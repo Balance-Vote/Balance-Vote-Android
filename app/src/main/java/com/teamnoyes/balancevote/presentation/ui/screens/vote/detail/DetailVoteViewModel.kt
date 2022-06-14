@@ -45,6 +45,7 @@ class DetailVoteViewModel @Inject constructor(private val repository: VotePostRe
             .observeOn(AndroidSchedulers.mainThread()).subscribeWith(object : DisposableSingleObserver<List<Comment>>() {
                 override fun onSuccess(t: List<Comment>) {
                     Log.d(TAG, t.toString())
+                    commentList.clear()
                     commentList.addAll(t)
                 }
 
