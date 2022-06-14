@@ -3,6 +3,7 @@ package com.teamnoyes.balancevote.presentation.ui.screens.post
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -23,22 +24,23 @@ data class PostNewVoteUiState(val isPosted: Boolean = false, val throwError: Boo
 fun PostScreen(
     viewModel: PostViewModel = viewModel(),
     navController: NavController,
+    nickname: MutableState<String>,
     snackbarEvent: (String) -> Unit,
 ) {
     val a = remember { mutableStateOf("") }
     val b = remember { mutableStateOf("") }
     if (viewModel.postNewVoteUiState.value.isPosted) {
-        snackbarEvent("Success")
+//        snackbarEvent("Success")
         viewModel.postNewVoteUiState.value = PostNewVoteUiState(isPosted = false)
         navController.navigate(BottomNavScreen.HOME.route)
     }
     if (viewModel.postNewVoteUiState.value.throwError) {
-        snackbarEvent("Fail")
+        snackbarEvent("Error occurred. Please try again later.")
         viewModel.postNewVoteUiState.value = PostNewVoteUiState(throwError = false)
     }
     PostScreenBody(onSelectionOneChanged = { a.value = it.text },
         onSelectionTwoChanged = { b.value = it.text }) {
-        viewModel.postNewVote(a.value, b.value, "0419Test")
+        viewModel.postNewVote(a.value, b.value, nickname.value)
     }
 }
 

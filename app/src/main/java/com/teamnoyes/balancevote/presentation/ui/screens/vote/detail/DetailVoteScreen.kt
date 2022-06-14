@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +36,7 @@ fun DetailVoteScreen(
     viewModel: DetailVoteViewModel = viewModel(),
     navController: NavController,
     postId: String,
+    nickname: MutableState<String>,
 ) {
     viewModel.getVotePost(postId)
     viewModel.getCommentList(postId)
@@ -54,9 +56,7 @@ fun DetailVoteScreen(
                 enableButton = true,
                 hintMessage = stringResource(id = R.string.detail_vote_hint),
                 onSendButtonClick = { comment ->
-                    viewModel.postParentComment(comment,
-                        postId,
-                        "uuidTest")
+                    viewModel.postParentComment(comment, postId, nickname.value)
                 }
             )
         }

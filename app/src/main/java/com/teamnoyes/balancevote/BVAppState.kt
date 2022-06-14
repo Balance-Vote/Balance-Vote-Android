@@ -2,6 +2,7 @@ package com.teamnoyes.balancevote
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph
@@ -41,6 +42,8 @@ class BVAppState(val navController: NavHostController) {
 
     val currentTitle: String?
         get() = routeToTitle[navController.currentDestination?.route]
+
+    val nickname = mutableStateOf("")
 
     fun navigateBottomNav(route: String) {
         if (route != currentRoute) {

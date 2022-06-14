@@ -21,9 +21,11 @@ import com.teamnoyes.balancevote.presentation.ui.widget.BVInput
 import com.teamnoyes.balancevote.presentation.ui.widget.BVTextButton
 
 @Composable
-fun EntryScreen(navController: NavController) {
+fun EntryScreen(navController: NavController, onSubmit: (String) -> Unit) {
     Scaffold() {
-        EntryScreenBody(onClick = {
+        EntryScreenBody(onClick = { nickname ->
+//            nickname입력
+            onSubmit(nickname)
             navController.navigate("main") {
                 popUpTo("entry") {
                     inclusive = true
@@ -36,8 +38,9 @@ fun EntryScreen(navController: NavController) {
 @Composable
 fun EntryScreenBody(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+    onClick: (String) -> Unit,
 ) {
+    var nickname = ""
     Column(
         modifier = modifier
             .fillMaxHeight()
@@ -72,13 +75,13 @@ fun EntryScreenBody(
             BVInput(
                 enableButton = false,
                 hintMessage = stringResource(id = R.string.entry_hint_nickname),
-                onTextChanged = {}
+                onTextChanged = { nickname = it.text }
             )
 
             BVTextButton(
                 modifier = modifier.align(Alignment.BottomCenter),
                 text = stringResource(id = R.string.entry_start),
-                onClick = onClick,
+                onClick = { onClick(nickname) },
                 isSelected = false,
                 height = 112.dp,
                 fontSize = 36.sp

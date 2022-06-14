@@ -3,6 +3,7 @@ package com.teamnoyes.balancevote.presentation.ui.screens.vote
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -29,19 +30,20 @@ fun VoteScreen(
     postId: String,
     leftTopic: String = "LEFT",
     rightTopic: String = "RIGHT",
+    nickname: MutableState<String>,
 ) {
     if (viewModel.postVoteSelectionUiState.value.isPosted) {
-        snackbarEvent("Success")
+//        snackbarEvent("Success")
         viewModel.postVoteSelectionUiState.value = PostVoteSelectionUiState(isPosted = false)
         navController.navigate("main/detail/$postId") {
             popUpTo(BottomNavScreen.HOME.route)
         }
     }
     if (viewModel.postVoteSelectionUiState.value.throwError) {
-        snackbarEvent("Fail")
+        snackbarEvent("Error occurred. Please try again later.")
         viewModel.postVoteSelectionUiState.value = PostVoteSelectionUiState(throwError = false)
     }
-    VoteScreenBody(viewModel, modifier, postId, leftTopic, rightTopic)
+    VoteScreenBody(viewModel, modifier, postId, leftTopic, rightTopic, nickname.value)
 }
 
 @Composable
@@ -50,7 +52,8 @@ fun VoteScreenBody(
     modifier: Modifier = Modifier,
     postId: String,
     leftTopic: String,
-    rightTopic: String
+    rightTopic: String,
+    nickname: String,
 ) {
     Column(
         modifier = modifier
@@ -72,7 +75,7 @@ fun VoteScreenBody(
         Spacer(modifier = modifier.padding(0.dp, 16.dp))
         BVTextButton(
             text = leftTopic,
-            onClick = { viewModel.postVoteSelection(postId, "1", "0530testUUID1000") },
+            onClick = { viewModel.postVoteSelection(postId, "1", nickname) },
             isSelected = false,
             role = BVTextButtonRole.RED,
             horizontalAlignment = Arrangement.Start,
@@ -82,7 +85,7 @@ fun VoteScreenBody(
         Spacer(modifier = modifier.padding(0.dp, 8.dp))
         BVTextButton(
             text = rightTopic,
-            onClick = { viewModel.postVoteSelection(postId, "2", "0530testUUID1000") },
+            onClick = { viewModel.postVoteSelection(postId, "2", nickname) },
             isSelected = false,
             role = BVTextButtonRole.BLUE,
             horizontalAlignment = Arrangement.Start,
@@ -110,6 +113,9 @@ fun VoteScreenPreviewDark() {
 @Composable
 fun VoteScreenPreview(darkTheme: Boolean) {
     BalanceVoteTheme(darkTheme) {
-        VoteScreenBody(postId = "", leftTopic = "LEFT", rightTopic = "RIGHT")
+        VoteScreenBody(postId = "",
+            leftTopic = "LEFT",
+            rightTopic = "RIGHT",
+            nickname = "TESTNICKNAME")
     }
 }
