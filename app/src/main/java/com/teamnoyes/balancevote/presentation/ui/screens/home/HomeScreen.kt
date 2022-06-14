@@ -65,6 +65,7 @@ fun HomeScreenBody(
             HorizontalPager(
                 count = 2,
                 state = pagerState,
+                itemSpacing = 8.dp,
                 contentPadding = PaddingValues(horizontal = 32.dp),
                 modifier = Modifier
                     .fillMaxWidth()

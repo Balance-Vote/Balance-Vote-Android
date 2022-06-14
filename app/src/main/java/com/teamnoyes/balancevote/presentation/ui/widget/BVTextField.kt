@@ -25,7 +25,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.teamnoyes.balancevote.R
+import com.teamnoyes.balancevote.presentation.ui.theme.BackGround
 import com.teamnoyes.balancevote.presentation.ui.theme.BalanceVoteTheme
+import com.teamnoyes.balancevote.presentation.ui.theme.MainColor
 
 /**
  * 버튼은 오른쪽 정렬, 남는 공간을 TextField로 채움
@@ -50,7 +52,7 @@ fun BVInput(
     val focusManager = LocalFocusManager.current
     val isFirst = remember { mutableStateOf(true) }
 
-    Column() {
+    Column(modifier = Modifier.background(BackGround)) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -165,12 +167,12 @@ fun BVButton(isTextEmpty: Boolean, onClick: () -> Unit) {
     IconButton(
         onClick = { onClick() },
         modifier = Modifier
-            .shadow(elevation = 4.dp, shape = RoundedCornerShape(8.dp))
+            .shadow(elevation = 4.dp, shape = RoundedCornerShape(100))
             .height(64.dp)
             .width(64.dp)
-            .background(color = Color.Magenta, shape = RoundedCornerShape(8.dp)),
+            .background(color = MainColor, shape = RoundedCornerShape(100)),
         enabled = !isTextEmpty
-    ) { Icon(Icons.Filled.Send, contentDescription = "Send Button") }
+    ) { Icon(Icons.Filled.Send, contentDescription = "Send Button", tint = Color.DarkGray) }
 }
 
 @Preview

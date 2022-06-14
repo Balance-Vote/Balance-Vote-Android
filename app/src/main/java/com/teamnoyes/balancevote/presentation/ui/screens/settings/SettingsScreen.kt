@@ -18,7 +18,7 @@ fun SettingsScreen() {
     val context = LocalContext.current
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(16.dp)) {
+        .padding(24.dp)) {
         BVTextButton(
             text = "OSS",
             onClick = {
@@ -26,7 +26,7 @@ fun SettingsScreen() {
                     OssLicensesMenuActivity::class.java))
             },
             isSelected = false,
-            horizontalAlignment = Arrangement.Start
+            horizontalAlignment = Arrangement.Center
         )
 //        BVTextButton(
 //            text = "Credit",

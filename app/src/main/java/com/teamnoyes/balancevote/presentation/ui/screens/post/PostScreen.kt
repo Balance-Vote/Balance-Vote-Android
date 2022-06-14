@@ -50,7 +50,7 @@ fun PostScreenBody(
 ) {
     Box() {
         Column(modifier = Modifier
-            .padding(16.dp)
+            .padding(24.dp)
             .fillMaxSize()) {
             BVInput(
                 enableButton = false,
