@@ -6,7 +6,8 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Balance-Vote/Balance-Vote-Android)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Balance-Vote/Balance-Vote-Android)
 
-(구글 플레이 검토중)
+<a href='https://play.google.com/store/apps/details?id=com.teamnoyes.balancevote'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' height="70" width="180"/></a>
+<br>
 
 BalanceVote는 다른 사용자가 제시한 두 가지 제시어중 하나를 선택하고 사용자들간 댓글을 통한 의견 교환을 할 수 있는 애플리케이션입니다.
 
