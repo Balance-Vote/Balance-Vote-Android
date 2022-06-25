@@ -42,15 +42,67 @@ BalanceVote는 다른 사용자가 제시한 두 가지 제시어중 하나를 �
 
 ## Jetpack Compose
 
-애플리케이션의 UI 레이어는 모두 Jetpack Compose를 사용하여 구현하였습니다.
+애플리케이션의 UI 레이어는 모두 Jetpack Compose를 사용하여 구현하였습니다. UI 레이어의 
 
 ### 선언적 그래픽
 
-위에서 그려진 그래프는 Compose의 `Canvas` 객체를 사용하여 구현하였습니다. 
+위에서 그려진 그래프는 Compose의 `Canvas` 객체를 사용하여 구현하였습니다.
+
+Compose의 `Canvas` 객체는 기존의 `Canvas`와 완전히 다른 새로운 구현이 아닌, 생성하면 이 객체가 View System의 기존 `Canvas`를 생성하고 관리하는 방식입니다. 그렇지만 Compose의 장점인 업데이트시 재구성, 상태 관리 등의 장점을 그대로 사용할 수 있고, 기존의 `Canvas`에 비해 더 직관적으로 코드를 관리할 수 있습니다.
 
 ### Navigation
 
 Navigation 또한 기존의 Fragment 방식 대신 Compose에서 `Composable` 간의 이동으로 구현하였습니다.
+
+View System 에서 Navigation 그래프를 XML 파일로 생성하고 시각적으로 볼 수 있었던 것에 비해, Compose의 Navigation은 `NavHost`에서 직접 생성하는 방식으로 낯설어 보이지만 기존의 XML와 유사한 구조입니다. 주요한 변경점은
+ - Fragment 간의 이동이 아닌 Composable 함수 간의 이동
+ - Navigation 그래프의 시각적 표현은 아직 지원되지 않음
+
+**View System**
+([Android 가이드](https://developer.android.com/guide/navigation/navigation-getting-started?hl=ko)의 예시)
+```XML
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    app:startDestination="@id/blankFragment">
+    <fragment
+        android:id="@+id/blankFragment"
+        android:name="com.example.cashdog.cashdog.BlankFragment"
+        android:label="@string/label_blank"
+        tools:layout="@layout/fragment_blank" />
+</navigation>
+```
+
+**Compose**
+
+```kotlin
+NavHost(
+    navController = appState.navController,
+    startDestination = "entry",
+    modifier = Modifier.padding(pv)
+) {
+    composable("splash") {
+        SplashScreen(navController = appState.navController)
+    }
+    composable("entry") {
+        EntryScreen(navController = appState.navController) {
+            appState.nickname.value = it
+        }
+    }
+    addMainGraph(appState.navController, appState.nickname) { msg ->
+        scope.launch {
+            scaffoldState.snackbarHostState
+                .showSnackbar(msg)
+        }
+    }
+}
+```
+
+각 이동 단위 간에 데이터를 전달하고 싶을 경우
+
+중첩 그래프를 생성하고 싶을 경우
+
 
 ## Hilt
 
